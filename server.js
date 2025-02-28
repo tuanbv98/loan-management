@@ -29,14 +29,33 @@ app.set("view engine", "ejs");
 // Set views directory explicitly (ensure correct path)
 app.set("views", path.join(__dirname, "app/views"));
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
 
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+
+// Serve static files from the public directory
+app.use(express.static('app/public'));
+
+// Serve static files
+app.use(express.static('app/views'));
+
+// Routes
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app/views', 'login.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app/views', 'dashboard.html'));
+});
+
+app.get('/customers', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app/views', 'customer.html'));
+});
+
+app.get('/customers/new', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app/views', 'new-customer.html'));
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

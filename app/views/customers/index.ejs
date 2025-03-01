@@ -1,0 +1,86 @@
+<div class="customer-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Customer Management</h1>
+        <button class="btn-add-customer" onclick="openAddCustomerModal()">
+            <i class="fas fa-plus"></i> Add New Customer
+        </button>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter-container">
+        <div class="search-box">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Search customers..."
+            >
+            <button class="btn-add-customer">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+        <div class="filter-options">
+            <select class="filter-select">
+                <option value="">Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+            <select class="filter-select">
+                <option value="">Sort By</option>
+                <option value="name">Name</option>
+                <option value="date">Date Added</option>
+                <option value="loans">Number of Loans</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Customer Table -->
+    <div class="customer-table-container">
+        <table class="customer-table">
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Total Loans</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CUS001</td>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td>+1234567890</td>
+                    <td>3</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-view" onclick="viewCustomer('CUS001')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-action btn-edit" onclick="editCustomer('CUS001')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteCustomer('CUS001')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Add more customer rows here -->
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button><i class="fas fa-chevron-left"></i></button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>

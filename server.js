@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const path = require("path");
+const routes = require('./app/routes');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
@@ -21,40 +23,46 @@ app.use(
 // database
 const db = require("./app/models");
 const Role = db.role;
-
 db.sequelize.sync();
 
-app.set("view engine", "ejs");
+// Use express-ejs-layouts
+app.use(expressLayouts);
+app.set('layout', 'layouts/main');
+app.set('layout extractScripts', true);
+app.set('layout extractStyles', true);
 
-// Set views directory explicitly (ensure correct path)
-app.set("views", path.join(__dirname, "app/views"));
+// Set view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'app/views'));
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'app/public')));
+
+// Routes
+app.use('/', routes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('error', {
+    message: 'Something broke!',
+    error: process.env.NODE_ENV === 'development' ? err : {}
+  });
+});
+
+// 404 handler
+// app.use((req, res) => {
+//   res.status(404).render('404');
+// });
 
 
 // routes
-require("./app/routes/auth.routes")(app);
-require("./app/routes/user.routes")(app);
-
-// Serve static files from the public directory
-app.use(express.static('app/public'));
-
-// Serve static files
-app.use(express.static('app/views'));
+// require("./app/routes/auth.routes")(app);
+// require("./app/routes/user.routes")(app);
 
 // Routes
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'app/views', 'login.html'));
-});
-
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'app/views', 'dashboard.html'));
-});
-
-app.get('/customers', (req, res) => {
-  res.sendFile(path.join(__dirname, 'app/views', 'customer.html'));
-});
-
-app.get('/customers/new', (req, res) => {
-  res.sendFile(path.join(__dirname, 'app/views', 'new-customer.html'));
 });
 
 // set port, listen for requests
@@ -62,20 +70,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user",
-  });
-
-  Role.create({
-    id: 2,
-    name: "moderator",
-  });
-
-  Role.create({
-    id: 3,
-    name: "admin",
-  });
-}

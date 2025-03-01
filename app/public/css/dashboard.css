@@ -52,6 +52,11 @@
     width: 20px;
 }
 
+.nav-item > a {
+    color: white;
+    text-decoration: none;
+}
+
 /* Main Content Styling */
 .main-content {
     flex: 1;

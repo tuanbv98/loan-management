@@ -1,0 +1,35 @@
+<div class="sidebar">
+    <div class="brand">
+        <h2>Loan Management</h2>
+    </div>
+    <div class="nav-item <%= currentPage === 'dashboard' ? 'active' : '' %>">
+        <a href="/dashboard">
+            <i class="fas fa-home"></i>
+            Dashboard
+        </a>
+    </div>
+    <div class="nav-item <%= currentPage === 'customers' ? 'active' : '' %>">
+        <a href="/customers">
+            <i class="fas fa-users"></i>
+            Customers
+        </a>
+    </div>
+    <div class="nav-item <%= currentPage === 'loans' ? 'active' : '' %>">
+        <a href="/loans">
+            <i class="fas fa-money-bill-wave"></i>
+            Loans
+        </a>
+    </div>
+    <div class="nav-item <%= currentPage === 'reports' ? 'active' : '' %>">
+        <a href="/reports">
+            <i class="fas fa-chart-bar"></i>
+            Reports
+        </a>
+    </div>
+    <div class="nav-item <%= currentPage === 'settings' ? 'active' : '' %>">
+        <a href="/settings">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
+    </div>
+</div>

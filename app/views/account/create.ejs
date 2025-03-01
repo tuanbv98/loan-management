@@ -1,0 +1,52 @@
+<div class="">
+    <div class="header">
+        <h1>Tạo tài khoản mới</h1>
+    </div>
+
+    <form id="createUserForm" onsubmit="return validateForm(event)">
+        <div class="form-group">
+            <label for="name">Tên người dùng<span class="required">*</span></label>
+            <input type="text" id="name" name="name" class="form-control" required>
+            <div class="error-message" id="nameError">Vui lòng nhập tên người dùng</div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email<span class="required">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" required>
+            <div class="error-message" id="emailError">Vui lòng nhập email hợp lệ</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mật khẩu<span class="required">*</span></label>
+            <div class="password-input-group">
+                <input type="password" id="password" name="password" class="form-control" required>
+                <button type="button" class="password-toggle" onclick="togglePassword('password')">Hiện</button>
+            </div>
+            <div class="error-message" id="passwordError">Mật khẩu phải có ít nhất 8 ký tự</div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Xác nhận mật khẩu<span class="required">*</span></label>
+            <div class="password-input-group">
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">Hiện</button>
+            </div>
+            <div class="error-message" id="confirmPasswordError">Mật khẩu xác nhận không khớp</div>
+        </div>
+
+        <div class="form-group">
+            <label>Quyền hạn<span class="required">*</span></label>
+            <select class="filter-dropdown">
+                <option value="">Vai trò</option>
+                <option value="admin">Quản trị viên</option>
+                <option value="staff">Nhân viên</option>
+                <option value="user">Người dùng</option>
+            </select>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Hủy</button>
+        </div>
+    </form>
+</div>

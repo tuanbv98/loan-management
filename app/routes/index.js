@@ -18,6 +18,7 @@ router.use('/customers', routes);
 router.use('/settings', routes);
 router.use('/loans', routes);
 router.use('/reports', routes);
-// router.use('/account', accountRoutes);
+router.use('/account', routes);
+router.use('/account/create', routes);
 
 module.exports = router;

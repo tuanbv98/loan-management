@@ -1,0 +1,139 @@
+<div class="container">
+    <div class="header">
+        <h1>Danh sách người dùng và phân quyền</h1>
+        <button
+            class="add-user-button"
+            onclick="window.location.href='/accounts/create'"
+        >
+            + Thêm người dùng mới
+        </button>
+    </div>
+
+    <div class="search-filter-container">
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm người dùng...">
+        </div>
+        <select class="filter-dropdown">
+            <option value="">Vai trò</option>
+            <option value="admin">Quản trị viên</option>
+            <option value="staff">Nhân viên</option>
+            <option value="user">Người dùng</option>
+        </select>
+        <select class="filter-dropdown">
+            <option value="">Trạng thái</option>
+            <option value="active">Đang hoạt động</option>
+            <option value="inactive">Không hoạt động</option>
+        </select>
+    </div>
+
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>Người dùng</th>
+                <th>Vai trò</th>
+                <th>Quyền hạn</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A" alt="Avatar" class="user-avatar">
+                        <div>
+                            <div class="user-name">Nguyễn Văn A</div>
+                            <div class="user-email">nguyenvana@example.com</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="role-badge">Quản trị viên</span>
+                </td>
+                <td>
+                    <div class="permissions-list">
+                        <span class="permission-badge">Quản lý người dùng</span>
+                        <span class="permission-badge">Quản lý vai trò</span>
+                        <span class="permission-badge">Quản lý hệ thống</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge status-active">Đang hoạt động</span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="edit-button">Sửa</button>
+                        <button class="delete-button">Xóa</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=Tran+Thi+B" alt="Avatar" class="user-avatar">
+                        <div>
+                            <div class="user-name">Trần Thị B</div>
+                            <div class="user-email">tranthib@example.com</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="role-badge">Nhân viên</span>
+                </td>
+                <td>
+                    <div class="permissions-list">
+                        <span class="permission-badge">Xem danh sách</span>
+                        <span class="permission-badge">Tạo báo cáo</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge status-active">Đang hoạt động</span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="edit-button">Sửa</button>
+                        <button class="delete-button">Xóa</button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=Le+Van+C" alt="Avatar" class="user-avatar">
+                        <div>
+                            <div class="user-name">Lê Văn C</div>
+                            <div class="user-email">levanc@example.com</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="role-badge">Người dùng</span>
+                </td>
+                <td>
+                    <div class="permissions-list">
+                        <span class="permission-badge">Xem thông tin</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge status-inactive">Không hoạt động</span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="edit-button">Sửa</button>
+                        <button class="delete-button">Xóa</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button>&laquo;</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>&raquo;</button>
+    </div>
+</div>

@@ -5,7 +5,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/customer.css">
-    <link rel="stylesheet" href="/css/new-customer.css">
+    <link rel="stylesheet" href="/css/account.css">
+    <link rel="stylesheet" href="/css/input-form.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -17,6 +18,12 @@
                 <a href="/">
                     <i class="fas fa-home"></i>
                     Dashboard
+                </a>
+            </div>
+            <div class="nav-item <%= currentPage === 'accounts' ? 'active' : '' %>">
+                <a href="/accounts">
+                    <i class="fas fa-users-cog"></i>
+                    Accounts
                 </a>
             </div>
             <div class="nav-item <%= currentPage === 'customers' ? 'active' : '' %>">

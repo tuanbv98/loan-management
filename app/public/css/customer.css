@@ -46,7 +46,7 @@
 .search-box {
     display: flex;
     gap: 15px;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
 }
 
 .search-input {

@@ -228,22 +228,13 @@
     transform: rotate(90deg);
 }
 
-/* .nav-item:hover {
-    background-color: rgba(255,255,255,0.1);
+.active {
+    display: none;
 }
 
-.nav-item.active > div {
-    background-color: rgba(255,255,255,0.1);
+.in_active {
+    display: block;
 }
-
-.nav-item.active > div:first-child {
-    border-left: 4px solid #3498db;
-}
-
-.submenu-item.active {
-    background-color: rgba(255,255,255,0.1);
-    color: #3498db;
-} */
 
 /* Utility Classes */
 .bg-blue { background-color: #3498db; }

@@ -164,9 +164,8 @@ body {
     border-radius: 5px;
     margin-bottom: 20px;
     font-size: 14px;
-    display: none;
 }
 
 .error-message.show {
     display: block;
-} 
+}

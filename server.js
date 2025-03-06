@@ -25,11 +25,23 @@ const db = require("./app/models");
 const Role = db.role;
 db.sequelize.sync();
 
+// Make session available in all views (including layouts)
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
 // Use express-ejs-layouts
 app.use(expressLayouts);
 app.set('layout', 'layouts/main');
 app.set('layout extractScripts', true);
 app.set('layout extractStyles', true);
+
+// Use layout login
+app.use('/login', (_, res, next) => {
+  res.locals.layout = 'login';
+  next();
+});
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -54,16 +66,6 @@ app.use((err, req, res, next) => {
 // app.use((req, res) => {
 //   res.status(404).render('404');
 // });
-
-
-// routes
-// require("./app/routes/auth.routes")(app);
-// require("./app/routes/user.routes")(app);
-
-// Routes
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'app/views', 'login.html'));
-});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

@@ -14,37 +14,39 @@
             <div class="brand">
                 <h2>Loan Management</h2>
             </div>
-            <div class="nav-item <%= currentPage === 'dashboard' ? 'active' : '' %>">
+            <div class="nav-item">
                 <a href="/">
                     <i class="fas fa-home"></i>
                     Dashboard
                 </a>
             </div>
-            <div class="nav-item <%= currentPage === 'accounts' ? 'active' : '' %>">
-                <a href="/accounts">
-                    <i class="fas fa-users-cog"></i>
-                    Accounts
-                </a>
-            </div>
-            <div class="nav-item <%= currentPage === 'customers' ? 'active' : '' %>">
+            <% if (session.user.role === 'admin') { %>
+                <div class="nav-item">
+                    <a href="/accounts">
+                        <i class="fas fa-users-cog"></i>
+                        Accounts
+                    </a>
+                </div>
+            <% } %>
+            <div class="nav-item">
                 <a href="/customers">
                     <i class="fas fa-users"></i>
                     Customers
                 </a>
             </div>
-            <div class="nav-item <%= currentPage === 'loans' ? 'active' : '' %>">
+            <div class="nav-item">
                 <a href="/loans">
                     <i class="fas fa-money-bill-wave"></i>
                     Loans
                 </a>
             </div>
-            <div class="nav-item <%= currentPage === 'reports' ? 'active' : '' %>">
+            <div class="nav-item">
                 <a href="/reports">
                     <i class="fas fa-chart-bar"></i>
                     Reports
                 </a>
             </div>
-            <div class="nav-item <%= currentPage === 'settings' ? 'active' : '' %>">
+            <div class="nav-item">
                 <a href="/settings">
                     <i class="fas fa-cog"></i>
                     Settings
@@ -52,6 +54,21 @@
             </div>
         </div>
         <div class="main-content">
+            <div class="header">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h3>Welcome back,</h3>
+                        <h2 id="username">Admin User</h2>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="window.location.href='/logout'">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
             <div id="content-area">
                 <%- body %>
             </div>

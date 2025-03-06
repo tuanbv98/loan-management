@@ -6,9 +6,15 @@ const settingsController = require('../controllers/settingsController');
 const loanController = require('../controllers/loanController');
 const reportsController = require('../controllers/reportController');
 const accountController = require('../controllers/accountController');
+const authController = require('../controllers/authController');
+
+// Login
+router.get('/login', authController.showLoginForm);
+router.post('/login', authController.login);
 
 // Dashboard
 router.get('/', dashboardController.getDashboard);
+router.get('/logout', dashboardController.logout);
 
 // Customers
 router.get('/customers', customerController.getCustomers);

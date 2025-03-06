@@ -11,20 +11,15 @@
             <h2>Welcome Back</h2>
             <p>Please login to your account</p>
         </div>
-
-        <div class="error-message" id="error-message">
-            Invalid username or password
-        </div>
-
-        <form id="login-form" onsubmit="return handleLogin(event)">
+        <form id="login-form" action="/login" method="POST">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="user_name">Username</label>
                 <div class="input-with-icon">
                     <i class="fas fa-user"></i>
                     <input
                         type="text"
-                        id="username"
-                        name="username"
+                        id="user_name"
+                        name="user_name"
                         placeholder="Enter your username"
                         required
                     >
@@ -45,6 +40,12 @@
                 </div>
             </div>
 
+            <% if (typeof error !== 'undefined') { %>
+                <div class="error-message" id="error-message">
+                    <%= error %>
+                </div>
+            <% } %>
+
             <div class="remember-forgot">
                 <label class="remember-me">
                     <input type="checkbox" name="remember">
@@ -57,43 +58,6 @@
                 <i class="fas fa-sign-in-alt"></i> Login
             </button>
         </form>
-
-        <div class="login-footer">
-            Don't have an account? <a href="/register">Sign up</a>
-        </div>
     </div>
-
-    <script>
-        function handleLogin(event) {
-            event.preventDefault();
-            // Get form values
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Add your login logic here
-            // Example:
-            fetch('/api/auth/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = '/dashboard';
-                } else {
-                    document.getElementById('error-message').classList.add('show');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('error-message').classList.add('show');
-            });
-
-            return false;
-        }
-    </script>
 </body>
 </html>

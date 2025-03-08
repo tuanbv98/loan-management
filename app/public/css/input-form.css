@@ -50,14 +50,11 @@
 }
 
 .error-message {
-    color: var(--error-color);
-    font-size: 12px;
-    margin-top: 5px;
-    display: none;
-}
-
-.error-message.show {
-    display: block;
+    background-color: #ffebee;
+    color: #e74c3c;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
 .permissions-container {

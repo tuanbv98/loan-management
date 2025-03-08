@@ -3,50 +3,66 @@
         <h1>Tạo tài khoản mới</h1>
     </div>
 
-    <form id="createUserForm" onsubmit="return validateForm(event)">
+    <% if (errors.length > 0) { %>
+        <% errors.forEach(error => { %>
+            <div class="error-message" id="error-message">
+                <%= error.msg %>
+            </div>
+        <% }) %>
+    <% } %>
+
+    <form id="createUserForm" action="/accounts/create" method="POST" style="margin-top: 15px;">
         <div class="form-group">
-            <label for="name">Tên người dùng<span class="required">*</span></label>
-            <input type="text" id="name" name="name" class="form-control" required>
-            <div class="error-message" id="nameError">Vui lòng nhập tên người dùng</div>
+            <label for="full_name">Họ và tên</label>
+            <input type="text" id="full_name" name="full_name" class="form-control" value="<%= oldData.full_name || '' %>">
+        </div>
+
+        <div class="form-group">
+            <label for="user_name">Tên đăng nhập<span class="required">*</span></label>
+            <input type="text" id="user_name" name="user_name" class="form-control" required value="<%= oldData.user_name || '' %>">
         </div>
 
         <div class="form-group">
             <label for="email">Email<span class="required">*</span></label>
-            <input type="email" id="email" name="email" class="form-control" required>
-            <div class="error-message" id="emailError">Vui lòng nhập email hợp lệ</div>
+            <input type="email" id="email" name="email" class="form-control" required value="<%= oldData.email || '' %>">
         </div>
 
         <div class="form-group">
-            <label for="password">Mật khẩu<span class="required">*</span></label>
+            <label for="password_hash">Mật khẩu<span class="required">*</span></label>
             <div class="password-input-group">
-                <input type="password" id="password" name="password" class="form-control" required>
-                <button type="button" class="password-toggle" onclick="togglePassword('password')">Hiện</button>
+                <input type="password" id="password_hash" name="password_hash" class="form-control" required value="<%= oldData.password_hash || '' %>">
+                <button type="button" class="password-toggle" onclick="togglePassword('password_hash')">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
-            <div class="error-message" id="passwordError">Mật khẩu phải có ít nhất 8 ký tự</div>
         </div>
 
         <div class="form-group">
             <label for="confirmPassword">Xác nhận mật khẩu<span class="required">*</span></label>
             <div class="password-input-group">
-                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
-                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">Hiện</button>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required value="<%= oldData.confirm_password || '' %>">
+                <button type="button" class="password-toggle" onclick="togglePassword('confirm_password')">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
-            <div class="error-message" id="confirmPasswordError">Mật khẩu xác nhận không khớp</div>
         </div>
 
         <div class="form-group">
             <label>Quyền hạn<span class="required">*</span></label>
-            <select class="filter-dropdown">
-                <option value="">Vai trò</option>
-                <option value="admin">Quản trị viên</option>
-                <option value="staff">Nhân viên</option>
-                <option value="user">Người dùng</option>
+            <input type="text" id="role" name="role" class="form-control" required value="user" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Trạng thái<span class="required">*</span></label>
+            <select class="filter-dropdown" name="status">
+                <option value="0" selected="<%= oldData.status == '0' ? 'selected' : '' %>">Đang hoạt động</option>
+                <option value="1" selected="<%= oldData.status == '1' ? 'selected' : '' %>">Không hoạt động</option>
             </select>
         </div>
 
-        <div class="button-group">
+        <div class="button-group" style="width: 50%; float: right;">
             <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
-            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Hủy</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="width: 45%;">Hủy</button>
         </div>
     </form>
 </div>

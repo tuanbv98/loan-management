@@ -1,0 +1,27 @@
+<div class="">
+    <div class="header">
+        <h1>Thêm mới khách hàng</h1>
+    </div>
+
+    <form id="createCustomForm" action="/customers/create" method="POST" style="margin-top: 15px;">
+        <div class="form-group">
+            <label for="full_name">Họ và tên</label>
+            <input type="text" id="full_name" name="full_name" class="form-control" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="user_name">Tên đăng nhập<span class="required">*</span></label>
+            <input type="text" id="user_name" name="user_name" class="form-control" required value="">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email<span class="required">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" required value="">
+        </div>
+
+        <div class="button-group" style="width: 50%; float: right;">
+            <button type="submit" class="btn btn-primary">Tạo khách hàng</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="width: 45%;">Hủy</button>
+        </div>
+    </form>
+</div>

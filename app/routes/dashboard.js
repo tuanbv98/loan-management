@@ -19,6 +19,23 @@ router.get('/logout', dashboardController.logout);
 
 // Customers
 router.get('/customers', customerController.getCustomers);
+router.get('/customers/create', customerController.formCreate);
+router.post(
+    '/customers/create',
+    // [
+    //     body('user_name').notEmpty().withMessage('Vui lòng nhập tên đăng nhập'),
+    //     body('email').isEmail().withMessage('Vui lòng nhập đúng định dạng email'),
+    //     body('password_hash').isLength({ min: 8 }).withMessage('Mật khẩu phải có ít nhất 8 ký tự'),
+    //     body('confirm_password')
+    //     .custom((value, { req }) => {
+    //         if (value !== req.body.password_hash) {
+    //             throw new Error('Mật khẩu xác nhận không khớp với mật khẩu');
+    //         }
+    //         return true;
+    //     })
+    // ],
+    customerController.createCustome
+);
 
 // Loan
 router.get('/loans', loanController.getLoans);

@@ -29,111 +29,74 @@
     <table class="users-table">
         <thead>
             <tr>
+                <th>STT</th>
+                <th>Tên đăng nhập</th>
                 <th>Người dùng</th>
                 <th>Vai trò</th>
-                <th>Quyền hạn</th>
                 <th>Trạng thái</th>
+                <th>Thời gian login</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <div class="user-info">
-                        <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A" alt="Avatar" class="user-avatar">
-                        <div>
-                            <div class="user-name">Nguyễn Văn A</div>
-                            <div class="user-email">nguyenvana@example.com</div>
+            <% accounts.forEach((account, index) => { %>
+                <tr key="<%= index %>">
+                    <td><%= index + 1 %></td>
+                    <td><%= account.user_name %></td>
+                    <td>
+                        <div class="user-info">
+                            <img src="https://ui-avatars.com/api/?name=<%= account.full_name %>" alt="Avatar" class="user-avatar">
+                            <div>
+                                <div class="user-name"><%= account.full_name %></div>
+                                <div class="user-email"><%= account.email %></div>
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <span class="role-badge">Quản trị viên</span>
-                </td>
-                <td>
-                    <div class="permissions-list">
-                        <span class="permission-badge">Quản lý người dùng</span>
-                        <span class="permission-badge">Quản lý vai trò</span>
-                        <span class="permission-badge">Quản lý hệ thống</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge status-active">Đang hoạt động</span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="edit-button">Sửa</button>
-                        <button class="delete-button">Xóa</button>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <div class="user-info">
-                        <img src="https://ui-avatars.com/api/?name=Tran+Thi+B" alt="Avatar" class="user-avatar">
-                        <div>
-                            <div class="user-name">Trần Thị B</div>
-                            <div class="user-email">tranthib@example.com</div>
+                    </td>
+                    <td>
+                        <span class="role-badge"><%= account.role == 'user' ? 'Quản trị viên' : 'Người dùng' %></span>
+                    </td>
+                    <td>
+                        <span class="status-badge status-active"><%= account.status == 'active' ? 'Đang hoạt động' : 'Không hoạt động' %></span>
+                    </td>
+                    <td><%= account.last_login %></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-edit" onclick="editCustomer('CUS001')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteCustomer('CUS001')">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <span class="role-badge">Nhân viên</span>
-                </td>
-                <td>
-                    <div class="permissions-list">
-                        <span class="permission-badge">Xem danh sách</span>
-                        <span class="permission-badge">Tạo báo cáo</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge status-active">Đang hoạt động</span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="edit-button">Sửa</button>
-                        <button class="delete-button">Xóa</button>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <div class="user-info">
-                        <img src="https://ui-avatars.com/api/?name=Le+Van+C" alt="Avatar" class="user-avatar">
-                        <div>
-                            <div class="user-name">Lê Văn C</div>
-                            <div class="user-email">levanc@example.com</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <span class="role-badge">Người dùng</span>
-                </td>
-                <td>
-                    <div class="permissions-list">
-                        <span class="permission-badge">Xem thông tin</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge status-inactive">Không hoạt động</span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="edit-button">Sửa</button>
-                        <button class="delete-button">Xóa</button>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            <% }); %>
         </tbody>
     </table>
 
-    <div class="pagination">
+    <!-- <div class="pagination">
         <button>&laquo;</button>
         <button class="active">1</button>
         <button>2</button>
         <button>3</button>
         <button>&raquo;</button>
+    </div> -->
+
+    <!-- Phân trang -->
+    <div class="pagination">
+        <% if (currentPageNumber > 1) { %>
+            <a href="/accounts?page=<%= currentPageNumber - 1 %>">« Trước</a>
+        <% } %>
+
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="/accounts?page=<%= i %>"
+                class="<%= i === currentPageNumber ? 'active' : '' %>">
+                <%= i %>
+            </a>
+        <% } %>
+
+        <% if (currentPageNumber < totalPages) { %>
+            <a href="/accounts?page=<%= currentPageNumber + 1 %>">Sau »</a>
+        <% } %>
     </div>
 </div>

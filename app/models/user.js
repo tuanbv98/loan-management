@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
+    full_name: {
+      type: DataTypes.STRING(100),
+    },
     email: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -20,12 +23,6 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    full_name: {
-      type: DataTypes.STRING(100),
-    },
-    phone_number: {
-      type: DataTypes.STRING(20),
-    },
     avatar_url: {
       type: DataTypes.STRING(255),
     },
@@ -34,25 +31,11 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: "user",
     },
     status: {
-      type: DataTypes.ENUM("active", "inactive", "locked"),
+      type: DataTypes.ENUM("active", "inactive"),
       defaultValue: "active",
     },
     last_login: {
       type: DataTypes.DATE,
-    },
-    created_by: {
-      type: DataTypes.BIGINT,
-      references: {
-        model: "users",
-        key: "id",
-      },
-    },
-    updated_by: {
-      type: DataTypes.BIGINT,
-      references: {
-        model: "users",
-        key: "id",
-      },
     },
   });
 

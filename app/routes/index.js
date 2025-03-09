@@ -15,6 +15,8 @@ const routes = require('./dashboard');
 // Route
 router.use('/', routes);
 router.use('/customers', routes);
+router.use('/customers/create', routes);
+
 router.use('/settings', routes);
 router.use('/loans', routes);
 router.use('/reports', routes);

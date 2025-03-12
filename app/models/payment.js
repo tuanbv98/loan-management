@@ -27,16 +27,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       onDelete: "CASCADE",
     },
-    loan_id: {
-      // Khoản vay liên quan
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: "loans",
-        key: "id",
-      },
-      onDelete: "CASCADE",
-    },
     amount_paid: {
       // Số tiền đã thanh toán
       type: DataTypes.DOUBLE,

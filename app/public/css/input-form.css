@@ -131,6 +131,6 @@
 }
 
 .required {
-    color: var(--error-color);
+    color: #e74c3c;
     margin-left: 3px;
 }

@@ -3,20 +3,62 @@
         <h1>Thêm mới khách hàng</h1>
     </div>
 
+    <% if (errors.length > 0) { %>
+        <% errors.forEach(error => { %>
+            <div class="error-message" id="error-message">
+                <%= error.msg %>
+            </div>
+        <% }) %>
+    <% } %>
+
+    <% if (error) { %>
+        <div class="error-message" id="error-message">
+            <%= error %>
+        </div>
+    <% } %>
+
     <form id="createCustomForm" action="/customers/create" method="POST" style="margin-top: 15px;">
         <div class="form-group">
             <label for="full_name">Họ và tên</label>
-            <input type="text" id="full_name" name="full_name" class="form-control" value="">
+            <input type="text" id="full_name" name="full_name" class="form-control" value="<%= oldData.full_name %>">
         </div>
 
         <div class="form-group">
-            <label for="user_name">Tên đăng nhập<span class="required">*</span></label>
-            <input type="text" id="user_name" name="user_name" class="form-control" required value="">
+            <label for="national_id">Số căn cước công dân<span class="required">*</span></label>
+            <input type="text" id="national_id" name="national_id" class="form-control" required value="<%= oldData.national_id %>">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Số điện thoại<span class="required">*</span></label>
+            <input type="text" id="phone" name="phone" class="form-control" required value="<%= oldData.phone %>">
         </div>
 
         <div class="form-group">
             <label for="email">Email<span class="required">*</span></label>
-            <input type="email" id="email" name="email" class="form-control" required value="">
+            <input type="email" id="email" name="email" class="form-control" required value="<%= oldData.email %>">
+        </div>
+
+        <div class="form-group">
+            <label for="address">Địa chỉ<span class="required">*</span></label>
+            <input type="address" id="address" name="address" class="form-control" required value="<%= oldData.address %>">
+        </div>
+
+        <div class="form-group">
+            <label>Giới tính<span class="required">*</span></label>
+            <select class="filter-dropdown" name="gender">
+                <option value="0" selected="<%= oldData.gender == '0' ? 'selected' : '' %>">Nam</option>
+                <option value="1" selected="<%= oldData.gender == '1' ? 'selected' : '' %>">Nữ</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Số tiền vay<span class="required">*</span></label>
+            <input type="amount" id="amount" name="amount" class="form-control" required value="<%= oldData.amount %>">
+        </div>
+
+        <div class="form-group">
+            <label for="interest_rate">Lãi suất<span class="required">*</span></label>
+            <input type="interest_rate" id="interest_rate" name="interest_rate" class="form-control" required value="<%= oldData.interest_rate %>">
         </div>
 
         <div class="button-group" style="width: 50%; float: right;">

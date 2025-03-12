@@ -28,4 +28,11 @@ db.loan = require("./loan.js")(sequelize, Sequelize);
 db.payment = require("./payment.js")(sequelize, Sequelize);
 db.transaction = require("./transaction.js")(sequelize, Sequelize);
 
+// Relationships table
+db.customer.hasMany(db.loan, { foreignKey: "user_id" });
+db.customer.hasMany(db.payment, { foreignKey: "user_id" });
+
+db.loan.belongsTo(db.customer, { foreignKey: "user_id" });
+db.payment.belongsTo(db.payment, { foreignKey: "user_id" });
+
 module.exports = db;

@@ -3,19 +3,11 @@ const bcrypt = require("bcryptjs");
 const User = db.user;
 
 const authController = {
-  showLoginForm: async (req, res) => {
-    try {
-      res.render('login', {
-        title: 'Login',
-        currentPage: 'login',
-      });
-    } catch (error) {
-      console.error('login Error:', error);
-      res.status(500).render('error', {
-        message: 'Error loading login',
-        error: process.env.NODE_ENV === 'development' ? error : {}
-      });
-    }
+  showLoginForm: async (_, res) => {
+    res.render('login', {
+      title: 'Login',
+      currentPage: 'login',
+    });
   },
 
   login: async (req, res) => {
@@ -38,6 +30,13 @@ const authController = {
     } catch (error) {
       res.render("login", { error: "Lỗi đăng nhập!" });
     }
+  },
+
+  showUnauthorized: async (_, res) => {
+    res.render('401', {
+      title: 'Unauthorized',
+      currentPage: 'Unauthorized',
+    });
   },
 };
 

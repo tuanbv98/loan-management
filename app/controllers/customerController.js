@@ -7,34 +7,19 @@ const { Sequelize } = require("sequelize");
 const moment = require("moment");
 
 const customerController = {
-  getCustomers: async (req, res) => {
-    try {
-      res.render('customers/index', {
-        title: 'Customers',
-        currentPage: 'customers',
-      });
-    } catch (error) {
-      console.error('customers Error:', error);
-      res.status(500).render('error', {
-        message: 'Error loading customers',
-        error: process.env.NODE_ENV === 'development' ? error : {}
-      });
-    }
+  getCustomers: async (_, res) => {
+    res.render('customers/index', {
+      title: 'Customers',
+      currentPage: 'customers',
+    });
   },
 
-  formCreate: async (req, res) => {
-    try {
-      res.render('customers/create', {
-        error: null,
-        errors: [],
-        oldData: {}
-      });
-    } catch (error) {
-      res.status(500).render('error', {
-        message: 'Error loading custome create',
-        error: process.env.NODE_ENV === 'development' ? error : {}
-      });
-    }
+  formCreate: async (_, res) => {
+    res.render('customers/create', {
+      error: null,
+      errors: [],
+      oldData: {}
+    });
   },
 
   createCustomer: async (req, res) => {

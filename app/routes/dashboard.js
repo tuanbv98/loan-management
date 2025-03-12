@@ -1,5 +1,7 @@
 const express = require('express');
-const { body, matchedData } = require('express-validator');
+const { body } = require('express-validator');
+const auth = require('../middleware/auth');
+const checkRole = require('../middleware/checkRole');
 const router = express.Router();
 const dashboardController = require('../controllers/dashboardController');
 const customerController = require('../controllers/customerController');
@@ -13,15 +15,34 @@ const authController = require('../controllers/authController');
 router.get('/login', authController.showLoginForm);
 router.post('/login', authController.login);
 
+router.get('/401', authController.showUnauthorized);
+
 // Dashboard
-router.get('/', dashboardController.getDashboard);
-router.get('/logout', dashboardController.logout);
+router.get(
+    '/',
+    checkRole(['admin', 'user']),
+    dashboardController.getDashboard
+);
+router.get(
+    '/logout',
+    checkRole(['admin', 'user']),
+    dashboardController.logout
+);
 
 // Customers
-router.get('/customers', customerController.getCustomers);
-router.get('/customers/create', customerController.formCreate);
+router.get(
+    '/customers',
+    checkRole(['admin', 'user']),
+    customerController.getCustomers
+);
+router.get(
+    '/customers/create',
+    checkRole(['admin', 'user']),
+    customerController.formCreate
+);
 router.post(
     '/customers/create',
+    checkRole(['admin', 'user']),
     [
         body('full_name').notEmpty().withMessage('Vui lòng nhập tên đăng nhập'),
         body('email').isEmail().withMessage('Vui lòng nhập đúng định dạng email'),
@@ -30,19 +51,40 @@ router.post(
 );
 
 // Loan
-router.get('/loans', loanController.getLoans);
+router.get(
+    '/loans',
+    checkRole(['admin', 'user']),
+    loanController.getLoans
+);
 
 // Settings
-router.get('/settings', settingsController.getSettings);
+router.get(
+    '/settings',
+    checkRole(['admin', 'user']),
+    settingsController.getSettings
+);
 
 // Reports
-router.get('/reports', reportsController.getReports);
+router.get(
+    '/reports',
+    checkRole(['admin', 'user']),
+    reportsController.getReports
+);
 
 // Accounts
-router.get('/accounts', accountController.getAccounts);
-router.get('/accounts/create', accountController.formCreate);
+router.get(
+    '/accounts',
+    checkRole(['admin']),
+    accountController.getAccounts
+);
+router.get(
+    '/accounts/create',
+    checkRole(['admin']),
+    accountController.formCreate
+);
 router.post(
     '/accounts/create',
+    checkRole(['admin']),
     [
         body('user_name').notEmpty().withMessage('Vui lòng nhập tên đăng nhập'),
         body('email').isEmail().withMessage('Vui lòng nhập đúng định dạng email'),

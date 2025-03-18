@@ -11,11 +11,11 @@ module.exports = (sequelize, Sequelize) => {
       // Khách hàng vay
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-      },
-      onDelete: "CASCADE",
+      // references: {
+      //   model: "users",
+      //   key: "id",
+      // },
+      // onDelete: "CASCADE",
     },
     loan_code: {
       // Mã khoản vay

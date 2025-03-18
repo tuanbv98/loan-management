@@ -43,12 +43,6 @@ app.use('/login', (_, res, next) => {
   next();
 });
 
-app.use('/401', (_, res, next) => {
-  res.locals.layout = '401';
-  next();
-});
-
-
 // Set view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'app/views'));
@@ -68,22 +62,13 @@ app.use((req, res, next) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    
-    // Handle different types of errors
-    if (err.status === 401 || err.name === 'UnauthorizedError') {
-        return res.status(401).render('401', { layout: false });
-    }
-    
-    res.status(500).render('error', {
-        message: 'Something went wrong!',
-        error: process.env.NODE_ENV === 'development' ? err : {}
-    });
+    res.status(500).json({ message: 'Something went wrong!' });
 });
 
 // 404 handler
-app.use((req, res) => {
-    res.status(404).render('404');
-});
+// app.use((req, res) => {
+//   res.status(404).render('404');
+// });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

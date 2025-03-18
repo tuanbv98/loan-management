@@ -1,0 +1,9 @@
+{
+    "development": {
+        "username": "root",
+        "password": "Tuanbv@123",
+        "database": "agence",
+        "host": "localhost",
+        "dialect": "mysql"
+    }
+}

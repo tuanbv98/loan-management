@@ -11,31 +11,21 @@ module.exports = (sequelize, Sequelize) => {
       // Khách hàng vay
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-      },
-      onDelete: "CASCADE",
-    },
-    user_id: {
-      // Khách hàng vay
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-      },
-      onDelete: "CASCADE",
+      // references: {
+      //   model: "users",
+      //   key: "id",
+      // },
+      // onDelete: "CASCADE",
     },
     loan_id: {
       // Khoản vay liên quan
       type: DataTypes.BIGINT,
       allowNull: false,
-      references: {
-        model: "loans",
-        key: "id",
-      },
-      onDelete: "CASCADE",
+      // references: {
+      //   model: "loans",
+      //   key: "id",
+      // },
+      // onDelete: "CASCADE",
     },
     amount: {
       // Số tiền đã thanh toán

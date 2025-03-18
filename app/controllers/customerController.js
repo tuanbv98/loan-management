@@ -7,11 +7,33 @@ const { Sequelize } = require("sequelize");
 const moment = require("moment");
 
 const customerController = {
-  getCustomers: async (_, res) => {
-    res.render('customers/index', {
-      title: 'Customers',
-      currentPage: 'customers',
-    });
+  getCustomers: async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 20;
+      const offset = (page - 1) * limit;
+
+      const { count, rows: customers } = await Customer.findAndCountAll({
+        limit,
+        offset
+      });
+
+      const totalPages = Math.ceil(count / limit);
+
+      res.render('customers/index', {
+        title: 'Customers',
+        currentPage: 'customers',
+        customers,
+        currentPageNumber: page,
+        totalPages
+      });
+    } catch (error) {
+      console.error('customers Error:', error);
+      res.status(500).render('error', {
+        message: 'Error loading customers',
+        error: process.env.NODE_ENV === 'development' ? error : {}
+      });
+    }
   },
 
   formCreate: async (_, res) => {
@@ -53,8 +75,8 @@ const customerController = {
         monthly_payment: 0,
         start_date: moment().format("YYYY-MM-DD"),
         due_date: moment().add(40, "days").format("YYYY-MM-DD"),
-        paid_amount: parseInt((req.body.interest_rate*req.body.amount) + req.body.amount),
-        remaining_amount: Math.round((((req.body.interest_rate * req.body.amount) + req.body.amount) / 40) * 7),
+        paid_amount: parseInt(req.body.interest_rate*req.body.amount) + parseInt(req.body.amount),
+        remaining_amount: Math.round(((parseInt(req.body.interest_rate*req.body.amount) + parseInt(req.body.amount)) / 40) * 7),
         status: 'Đang trả',
       });
 

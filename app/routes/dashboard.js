@@ -1,7 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const auth = require('../middleware/auth');
-const checkRole = require('../middleware/checkRole');
+const auth = require('../middleware/checkRole');
 const router = express.Router();
 const dashboardController = require('../controllers/dashboardController');
 const customerController = require('../controllers/customerController');
@@ -20,29 +19,46 @@ router.get('/401', authController.showUnauthorized);
 // Dashboard
 router.get(
     '/',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     dashboardController.getDashboard
 );
 router.get(
     '/logout',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     dashboardController.logout
 );
 
 // Customers
 router.get(
     '/customers',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    customerController.getCustomers
+);
+router.post(
+    '/customers',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     customerController.getCustomers
 );
 router.get(
     '/customers/create',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     customerController.formCreate
+);
+router.get(
+    '/customers/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    customerController.detailCustomer
 );
 router.post(
     '/customers/create',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     [
         body('full_name').notEmpty().withMessage('Vui lòng nhập tên đăng nhập'),
         body('email').isEmail().withMessage('Vui lòng nhập đúng định dạng email'),
@@ -53,38 +69,44 @@ router.post(
 // Loan
 router.get(
     '/loans',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     loanController.getLoans
 );
 
 // Settings
 router.get(
     '/settings',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     settingsController.getSettings
 );
 
 // Reports
 router.get(
     '/reports',
-    checkRole(['admin', 'user']),
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
     reportsController.getReports
 );
 
 // Accounts
 router.get(
     '/accounts',
-    checkRole(['admin']),
+    auth.verifyToken,
+    auth.checkRole(['admin']),
     accountController.getAccounts
 );
 router.get(
     '/accounts/create',
-    checkRole(['admin']),
+    auth.verifyToken,
+    auth.checkRole(['admin']),
     accountController.formCreate
 );
 router.post(
     '/accounts/create',
-    checkRole(['admin']),
+    auth.verifyToken,
+    auth.checkRole(['admin']),
     [
         body('user_name').notEmpty().withMessage('Vui lòng nhập tên đăng nhập'),
         body('email').isEmail().withMessage('Vui lòng nhập đúng định dạng email'),

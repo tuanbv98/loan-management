@@ -240,4 +240,226 @@
 .bg-blue { background-color: #3498db; }
 .bg-green { background-color: #2ecc71; }
 .bg-orange { background-color: #f39c12; }
-.bg-red { background-color: #e74c3c; } 
+.bg-red { background-color: #e74c3c; }
+
+/* pagination */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #2980b9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+.pagination a:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+.pagination .active {
+    background-color: #2980b9;
+    color: white;
+    border: 1px solid #2980b9;
+}
+
+/* Customer Header */
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.customer-info h1 {
+    font-size: 24px;
+    color: #2d3436;
+    margin-bottom: 5px;
+}
+
+.customer-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* .status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.active {
+    background: #55efc4;
+    color: #00b894;
+} */
+
+.id {
+    color: #636e72;
+    font-size: 14px;
+}
+
+/* Buttons */
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-edit {
+    background: #0984e3;
+    color: white;
+}
+
+.btn-delete {
+    background: #d63031;
+    color: white;
+    margin-left: 10px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Details Grid */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.detail-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.detail-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.detail-card h2 {
+    font-size: 18px;
+    color: #2d3436;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-card h2 i {
+    color: #0984e3;
+}
+
+/* Info Rows */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row label {
+    color: #636e72;
+    font-size: 14px;
+}
+
+/* Summary Stats */
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    background: #f5f6fa;
+    border-radius: 8px;
+}
+
+.stat-item label {
+    display: block;
+    color: #636e72;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #0984e3;
+}
+
+/* Loan Table */
+.loan-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.loan-table th {
+    text-align: left;
+    padding: 12px;
+    background: #f5f6fa;
+    color: #2d3436;
+    font-weight: 500;
+}
+
+.loan-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #0984e3;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.btn-icon:hover {
+    color: #00a8ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .customer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .summary-stats {
+        grid-template-columns: 1fr;
+    }
+}

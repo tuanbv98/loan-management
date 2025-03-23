@@ -5,5 +5,7 @@
         "database": "agence",
         "host": "localhost",
         "dialect": "mysql"
-    }
+    },
+    "secret": "loan_management",
+    "page_size": 20
 }

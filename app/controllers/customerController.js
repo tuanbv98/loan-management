@@ -1,19 +1,36 @@
 const { validationResult } = require('express-validator');
 const db = require("../models");
+const config = require("../config/config.json");
+const crypto = require('crypto');
+const { Sequelize, Op, where } = require("sequelize");
+const moment = require("moment");
+const { log } = require('console');
+
 const Customer = db.customer;
 const Loan = db.loan;
-const crypto = require('crypto');
-const { Sequelize } = require("sequelize");
-const moment = require("moment");
 
 const customerController = {
   getCustomers: async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
-      const limit = 20;
+      const limit = config.page_size;
       const offset = (page - 1) * limit;
+      const textSearch = req.body.textSearch || '';
+      console.log("textSearch: ", textSearch);
+
+      const whereCondition = textSearch
+      ? {
+          [Op.or]: [
+            { full_name: { [Op.like]: `%${textSearch}%` } },
+            { national_id: { [Op.like]: `%${textSearch}%` } },
+            { phone: { [Op.like]: `%${textSearch}%` } },
+            { email: { [Op.like]: `%${textSearch}%` } }
+          ]
+        }
+      : {};
 
       const { count, rows: customers } = await Customer.findAndCountAll({
+        where: whereCondition,
         limit,
         offset
       });
@@ -25,7 +42,11 @@ const customerController = {
         currentPage: 'customers',
         customers,
         currentPageNumber: page,
-        totalPages
+        totalPages,
+        oldData: {
+          textSearch: textSearch
+        },
+        limit: limit
       });
     } catch (error) {
       console.error('customers Error:', error);
@@ -96,6 +117,38 @@ const customerController = {
         error: mesErr,
         errors: errors.array(),
         oldData: req.body
+      });
+    }
+  },
+
+  detailCustomer: async (req, res) => {
+    try {
+      const id = user_id = req.params.id;
+      const customer = await Customer.findOne({where: {id}});
+      // const loans = await Loan.findOne({where: {user_id}});
+      const loans = await Loan.findAll({
+        where: { user_id },
+      });
+      const loanStats = {};
+
+      // console.log('loan: ', loan);
+
+      res.render('customers/show', {
+        customer,
+        loanStats,
+        loans,
+        // currentPageNumber: page,
+        // totalPages,
+        // oldData: {
+        //   textSearch: textSearch
+        // },
+        // limit: limit
+      });
+    } catch (error) {
+      console.error('customers Error:', error);
+      res.status(500).render('error', {
+        message: 'Error loading customers',
+        error: process.env.NODE_ENV === 'development' ? error : {}
       });
     }
   },

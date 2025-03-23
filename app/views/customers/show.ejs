@@ -1,0 +1,119 @@
+<!-- Customer Header -->
+<div class="customer-header">
+  <div class="customer-info">
+    <h1>Thông tin chi tiết khách hàng</h1>
+    <div class="customer-status">
+      <span class="status active">Active</span>
+      <span class="id">#<%= customer.id %></span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-sms">
+      <i class="fas fa-sms"></i>Spam Zalo SMS
+    </button>
+    <button class="btn btn-cloud">
+      <i class="fas fa-cloud"></i>Spam Cloud Iphone
+    </button>
+    <button class="btn btn-back" onclick="window.history.back()">
+      <i class="fas fa-arrow-left"></i>Trở lại
+    </button>
+    <button class="btn-add-customer" onclick="window.location.href='#'">
+      <i class="fas fa-plus"></i>Tạo khoản vay mới
+    </button>
+  </div>
+</div>
+
+<div class="details-grid">
+  <div class="detail-card">
+    <h2><i class="fas fa-user"></i>Thông tin khách hàng</h2>
+    <div class="card-content">
+      <div class="info-row">
+        <label>Họ và tên</label>
+        <span><%= customer.full_name %></span>
+      </div>
+      <div class="info-row">
+        <label>Số căn cước</label>
+        <span><%= customer.national_id %></span>
+      </div>
+      <div class="info-row">
+        <label>Email</label>
+        <span><%= customer.email %></span>
+      </div>
+      <div class="info-row">
+        <label>Số điện thoại</label>
+        <span><%= customer.phone %></span>
+      </div>
+      <div class="info-row">
+        <label>Địa chỉ</label>
+        <span><%= customer.address %></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loan Summary -->
+  <div class="detail-card">
+    <h2><i class="fas fa-money-bill-wave"></i>Thông tin cơ bản</h2>
+    <div class="card-content">
+      <div class="summary-stats">
+        <div class="stat-item">
+          <label>Số lần vay</label>
+          <span class="stat-value">5</span>
+        </div>
+        <div class="stat-item">
+          <label>Số lần trả chậm</label>
+          <span class="stat-value">2</span>
+        </div>
+        <div class="stat-item">
+          <label>Tổng tiền vay</label>
+          <span class="stat-value">$50,000</span>
+        </div>
+      </div>
+
+      <div class="summary-stats" style="margin-top: 10px;">
+        <div class="stat-item">
+          <label>Tổng số tiền lãi</label>
+          <span class="stat-value">$50,000</span>
+        </div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loan History -->
+  <div class="detail-card full-width">
+    <h2><i class="fas fa-history"></i>Lịch sử vay</h2>
+    <div class="card-content">
+      <table class="loan-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Số tiền vay</th>
+            <th>Lãi suất</th>
+            <th>Số tiền trả mỗi tháng</th>
+            <th>Ngày vay</th>
+            <th>Ngày trả</th>
+            <th>Số tiền đã trả</th>
+            <th>Số tiền còn lại</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% loans.forEach((loan, index) => { %>
+            <tr key="<%= index %>">
+              <td><%= index + 1 %></td>
+              <td><%= loan.amount %></td>
+              <td><%= loan.interest_rate %></td>
+              <td><%= loan.monthly_payment %></td>
+              <td><%= loan.start_date %></td>
+              <td><%= loan.due_date %></td>
+              <td><%= loan.paid_amount %></td>
+              <td><%= loan.remaining_amount %></td>
+              <td><span class="status"><%= loan.status %></span></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

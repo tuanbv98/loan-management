@@ -4,7 +4,6 @@ const config = require("../config/config.json");
 const crypto = require('crypto');
 const { Sequelize, Op, where } = require("sequelize");
 const moment = require("moment");
-const { log } = require('console');
 
 const Customer = db.customer;
 const Loan = db.loan;
@@ -125,24 +124,15 @@ const customerController = {
     try {
       const id = user_id = req.params.id;
       const customer = await Customer.findOne({where: {id}});
-      // const loans = await Loan.findOne({where: {user_id}});
       const loans = await Loan.findAll({
         where: { user_id },
       });
       const loanStats = {};
 
-      // console.log('loan: ', loan);
-
       res.render('customers/show', {
         customer,
         loanStats,
-        loans,
-        // currentPageNumber: page,
-        // totalPages,
-        // oldData: {
-        //   textSearch: textSearch
-        // },
-        // limit: limit
+        loans
       });
     } catch (error) {
       console.error('customers Error:', error);

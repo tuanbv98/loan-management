@@ -73,6 +73,18 @@ router.get(
     auth.checkRole(['admin', 'user']),
     loanController.getLoans
 );
+router.get(
+    '/customers/create/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    loanController.formCreate
+);
+router.post(
+    '/customers/create/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    loanController.createLoan
+);
 
 // Settings
 router.get(

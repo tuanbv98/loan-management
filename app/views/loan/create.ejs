@@ -1,0 +1,126 @@
+<div class="header">
+    <h1>Tạo mới khoản vay</h1>
+</div>
+
+<div class="content-wrapper">
+    <!-- Customer Info Card -->
+    <div class="customer-card">
+        <div class="customer-avatar">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="customer-details">
+            <h3><%= customer.full_name %></h3>
+            <div class="customer-meta">
+                <span><i class="fas fa-id-card"></i> CCCD: <%= customer.national_id %></span>
+                <span><i class="fas fa-phone"></i><%= customer.phone %></span>
+            </div>
+            <!-- <div class="customer-status">
+                <span class="status-badge active">
+                    <i class="fas fa-check-circle"></i> Khách hàng tích cực
+                </span>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- Loan Form -->
+    <div class="loan-form-container">
+        <form id="loanForm" class="loan-form">
+            <div class="form-grid">
+                <!-- Left Column -->
+                <div class="form-section">
+                    <h3>Thông tin khoản vay</h3>
+                    <div class="form-group">
+                        <label>Số tiền vay</label>
+                        <div class="input-group">
+                            <input type="number"
+                                   id="amount"
+                                   placeholder="Nhập số tiền"
+                                   onchange="calculateLoan()">
+                            <div class="input-suffix">VNĐ</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lãi suất</label>
+                        <div class="input-group">
+                            <input type="number"
+                                   id="interest_rate"
+                                   step="0.1"
+                                   placeholder="Nhập lãi suất"
+                                   onchange="calculateLoan()">
+                            <div class="input-suffix">%</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Thời hạn vay</label>
+                            <div class="input-group">
+                                <input type="number"
+                                       id="duration"
+                                       value="40"
+                                       onchange="calculateLoan()">
+                                <div class="input-suffix">Ngày</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ngày giải ngân</label>
+                            <input type="date"
+                                   id="start_date"
+                                   class="date-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="form-section">
+                    <h3>Chi tiết thanh toán</h3>
+                    <div class="loan-summary">
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Tổng tiền vay
+                            </div>
+                            <div class="summary-value" id="total_amount">0 VNĐ</div>
+                        </div>
+
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <i class="fas fa-percentage"></i>
+                                Tiền lãi
+                            </div>
+                            <div class="summary-value" id="interest_amount">0 VNĐ</div>
+                        </div>
+
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <i class="fas fa-calendar-day"></i>
+                                Tiền trả mỗi ngày
+                            </div>
+                            <div class="summary-value" id="daily_payment">0 VNĐ</div>
+                        </div>
+
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <i class="fas fa-calendar-check"></i>
+                                Ngày đáo hạn
+                            </div>
+                            <div class="summary-value" id="due_date">--/--/----</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                    <i class="fas fa-times"></i> Hủy
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Tạo khoản vay
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

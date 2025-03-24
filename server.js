@@ -4,8 +4,11 @@ const cookieSession = require("cookie-session");
 const path = require("path");
 const routes = require('./app/routes');
 const expressLayouts = require('express-ejs-layouts');
+const setupHelpers = require('./app/config/helpers');
 
 const app = express();
+
+setupHelpers(app);
 
 app.use(cors());
 app.use(express.json());

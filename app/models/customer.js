@@ -32,6 +32,14 @@ module.exports = (sequelize, Sequelize) => {
     gender: {
       type: DataTypes.ENUM("Nam", "Nữ"),
     },
+    is_spam_zalo: {
+      type: DataTypes.ENUM("active", "inactive"),
+      defaultValue: "inactive",
+    },
+    is_spam_icloud: {
+      type: DataTypes.ENUM("active", "inactive"),
+      defaultValue: "inactive",
+    }
   });
 
   return Customer;

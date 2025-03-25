@@ -57,22 +57,22 @@
       <div class="summary-stats">
         <div class="stat-item">
           <label>Số lần vay</label>
-          <span class="stat-value">5</span>
+          <span class="stat-value"><%= loanStats.numberLoans %></span>
         </div>
         <div class="stat-item">
           <label>Số lần trả chậm</label>
-          <span class="stat-value">2</span>
+          <span class="stat-value"><%= loanStats.overdueLoans %></span>
         </div>
         <div class="stat-item">
           <label>Tổng tiền vay</label>
-          <span class="stat-value">$50,000</span>
+          <span class="stat-value"><%= formatCurrency(loanStats.totalAmount) %></span>
         </div>
       </div>
 
       <div class="summary-stats" style="margin-top: 10px;">
         <div class="stat-item">
           <label>Tổng số tiền lãi</label>
-          <span class="stat-value">$50,000</span>
+          <span class="stat-value"><%= formatCurrency(loanStats.totalInterest) %></span>
         </div>
         <div></div>
         <div></div>
@@ -90,26 +90,26 @@
             <th>STT</th>
             <th>Số tiền vay</th>
             <th>Lãi suất</th>
-            <th>Số tiền trả mỗi tháng</th>
+            <th>Số tiền trả mỗi ngày</th>
+            <th>Số tiền nhận lại</th>
+            <th>Tổng tiền phải trả</th>
+            <th>Trạng thái</th>
             <th>Ngày vay</th>
             <th>Ngày trả</th>
-            <th>Số tiền đã trả</th>
-            <th>Số tiền còn lại</th>
-            <th>Trạng thái</th>
           </tr>
         </thead>
         <tbody>
           <% loans.forEach((loan, index) => { %>
             <tr key="<%= index %>">
               <td><%= index + 1 %></td>
-              <td><%= loan.amount %></td>
+              <td><%= formatCurrency(loan.amount) %></td>
               <td><%= loan.interest_rate %>%</td>
-              <td><%= loan.monthly_payment %></td>
+              <td><%= formatCurrency(loan.day_amount) %></td>
+              <td><%= formatCurrency(loan.received_amount) %></td>
+              <td><%= formatCurrency(loan.paid_amount) %></td>
+              <td><span class="status"><%= loan.status %></span></td>
               <td><%= formatDate(loan.start_date) %></td>
               <td><%= formatDate(loan.due_date) %></td>
-              <td><%= loan.paid_amount %></td>
-              <td><%= loan.remaining_amount %></td>
-              <td><span class="status"><%= loan.status %></span></td>
             </tr>
           <% }); %>
         </tbody>

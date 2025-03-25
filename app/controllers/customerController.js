@@ -4,6 +4,7 @@ const config = require("../config/config.json");
 const crypto = require('crypto');
 const { Sequelize, Op, where } = require("sequelize");
 const moment = require("moment");
+const { count, log } = require('console');
 
 const Customer = db.customer;
 const Loan = db.loan;
@@ -37,8 +38,6 @@ const customerController = {
       const totalPages = Math.ceil(count / limit);
 
       res.render('customers/index', {
-        title: 'Customers',
-        currentPage: 'customers',
         customers,
         currentPageNumber: page,
         totalPages,
@@ -82,9 +81,18 @@ const customerController = {
         email: req.body.email,
         address: req.body.address,
         gender: req.body.gender == '0' ? 'Nam' : 'Nữ',
+        is_spam_zalo: 'inactive',
+        is_spam_icloud: 'inactive',
       });
 
-      console.log("customer: ", typeof req.body.interest_rate*req.body.amount);
+      // Số tiền phải trả trong 40 ngày
+      const paidAmount = parseInt(req.body.interest_rate*req.body.amount) + parseInt(req.body.amount);
+      // Số tiền 7 ngày đầu
+      const amountOfSevenDay = Math.round((paidAmount / 40) * 7);
+      // Số tiền nhận về
+      const amountReceived = parseInt(paidAmount - amountOfSevenDay);
+      // Số tiền mỗi ngày phải trả
+      const dayPayment = Math.round(amountReceived / 40);
 
       await Loan.create({
         user_id: customer.id,
@@ -92,15 +100,35 @@ const customerController = {
         amount: req.body.amount,
         interest_rate: req.body.interest_rate,
         duration: 40,
-        monthly_payment: 0,
         start_date: moment().format("YYYY-MM-DD"),
         due_date: moment().add(40, "days").format("YYYY-MM-DD"),
-        paid_amount: parseInt(req.body.interest_rate*req.body.amount) + parseInt(req.body.amount),
-        remaining_amount: Math.round(((parseInt(req.body.interest_rate*req.body.amount) + parseInt(req.body.amount)) / 40) * 7),
+        day_amount: dayPayment,
+        received_amount: amountReceived,
+        paid_amount: paidAmount,
+        seven_day_of_amount: amountOfSevenDay,
         status: 'Đang trả',
       });
 
-      return res.render("customers/index", { message: "Đăng ký tài khoản thành công." })
+      const page = parseInt(req.query.page) || 1;
+      const limit = config.page_size;
+      const offset = (page - 1) * limit;
+
+      const { count, rows: customers } = await Customer.findAndCountAll({
+        limit,
+        offset
+      });
+
+      const totalPages = Math.ceil(count / limit);
+
+      return res.render('customers/index', {
+        customers,
+        currentPageNumber: page,
+        totalPages,
+        oldData: {
+          textSearch: ''
+        },
+        limit: limit
+      });
 
     } catch (error) {
       let mesErr = '';
@@ -127,7 +155,13 @@ const customerController = {
       const loans = await Loan.findAll({
         where: { user_id },
       });
-      const loanStats = {};
+
+      const loanStats = {
+        numberLoans: loans.length,
+        overdueLoans: loans.filter(loan => loan.status === "Quá hạn").length,
+        totalAmount: loans.reduce((sum, loan) => sum + loan.amount, 0),
+        totalInterest: loans.reduce((sum, loan) => sum + (loan.paid_amount - loan.amount), 0),
+      };
 
       res.render('customers/show', {
         customer,

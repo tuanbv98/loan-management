@@ -19,6 +19,7 @@ router.use('/customers/create', routes);
 
 router.use('/settings', routes);
 router.use('/loans', routes);
+router.use('/loans/create', routes);
 router.use('/reports', routes);
 router.use('/accounts', routes);
 router.use('/accounts/create', routes);

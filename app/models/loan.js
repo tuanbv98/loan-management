@@ -11,11 +11,6 @@ module.exports = (sequelize, Sequelize) => {
       // Khách hàng vay
       type: DataTypes.BIGINT,
       allowNull: false,
-      // references: {
-      //   model: "users",
-      //   key: "id",
-      // },
-      // onDelete: "CASCADE",
     },
     loan_code: {
       // Mã khoản vay
@@ -34,13 +29,9 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     duration: {
-      // Số tháng vay
+      // Số ngày vay
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    monthly_payment: {
-      // Số tiền phải trả mỗi tháng
-      type: DataTypes.DOUBLE,
     },
     start_date: {
       // Ngày bắt đầu vay
@@ -52,15 +43,25 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    paid_amount: {
-      // Tổng tiền đã trả
+    day_amount: {
+      // Số tiền phải trả mỗi ngày
       type: DataTypes.DOUBLE,
       defaultValue: 0,
     },
-    remaining_amount: {
-      // Số tiền còn lại
+    received_amount: {
+      // Số tiền nhận lại
       type: DataTypes.DOUBLE,
-      allowNull: false,
+      defaultValue: 0,
+    },
+    paid_amount: {
+      // Tổng tiền phải trả
+      type: DataTypes.DOUBLE,
+      defaultValue: 0,
+    },
+    seven_day_of_amount: {
+      // Số tiền 7 ngày đầu
+      type: DataTypes.DOUBLE,
+      defaultValue: 0,
     },
     status: {
       type: DataTypes.ENUM("Đang trả", "Quá hạn", "Đã tất toán"),

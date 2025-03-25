@@ -53,12 +53,12 @@
 
         <div class="form-group">
             <label for="amount">Số tiền vay<span class="required">*</span></label>
-            <input type="amount" id="amount" name="amount" class="form-control" required value="<%= oldData.amount %>">
+            <input type="number" id="amount" name="amount" class="form-control" required value="<%= oldData.amount %>">
         </div>
 
         <div class="form-group">
             <label for="interest_rate">Lãi suất<span class="required">*</span></label>
-            <input type="interest_rate" id="interest_rate" name="interest_rate" class="form-control" required value="<%= oldData.interest_rate %>">
+            <input type="interest_rate" id="interest_rate" name="interest_rate" class="form-control" required value="0.4" readonly>
         </div>
 
         <div class="button-group" style="width: 50%; float: right;">

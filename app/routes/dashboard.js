@@ -83,7 +83,19 @@ router.post(
     '/customers/create/:id',
     auth.verifyToken,
     auth.checkRole(['admin', 'user']),
-    loanController.createLoan
+    loanController.createLoanFollowCustomer
+);
+router.get(
+    '/loans/create',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    loanController.formAdd
+);
+router.post(
+    '/loans/create',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    loanController.addLoan
 );
 
 // Settings

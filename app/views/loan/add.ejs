@@ -4,7 +4,7 @@
 
 <div class="content-wrapper">
     <!-- Customer Info Card -->
-    <div class="customer-card">
+    <!-- <div class="customer-card">
         <div class="customer-avatar">
             <i class="fas fa-user-circle"></i>
         </div>
@@ -15,11 +15,11 @@
                 <span><i class="fas fa-phone"></i><%= customer.phone %></span>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Loan Form -->
     <div class="loan-form-container">
-        <form class="loan-form" action="/customers/create/<%= customer.id %>" method="POST">
+        <form class="loan-form" action="/loan/create" method="POST">
             <div class="form-grid">
                 <!-- Left Column -->
                 <div class="form-section">

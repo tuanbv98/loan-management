@@ -121,6 +121,12 @@ router.get(
     auth.checkRole(['admin']),
     accountController.getAccounts
 );
+router.post(
+    '/accounts',
+    auth.verifyToken,
+    auth.checkRole(['admin']),
+    accountController.getAccounts
+);
 router.get(
     '/accounts/create',
     auth.verifyToken,
@@ -144,6 +150,18 @@ router.post(
         })
     ],
     accountController.createAccount
+);
+router.get(
+    '/accounts/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin']),
+    accountController.accountDetail
+);
+router.post(
+    '/accounts/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin']),
+    accountController.accountEdit
 );
 
 module.exports = router;

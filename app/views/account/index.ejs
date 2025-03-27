@@ -9,22 +9,26 @@
         </button>
     </div>
 
-    <div class="search-filter-container">
-        <div class="search-box">
-            <input type="text" placeholder="Tìm kiếm người dùng...">
+    <form id="searchForm" action="/accounts" method="POST">
+        <div class="search-filter-container">
+            <div class="search-box">
+                <input
+                    name="textSearch"
+                    type="text"
+                    class="search-input"
+                    placeholder="Tìm kiếm dữ liệu..."
+                    value="<%= oldData.textSearch ?? '' %>"
+                >
+                <select class="filter-dropdown" name="status">
+                    <option value="active">Đang hoạt động</option>
+                    <option value="inactive">Không hoạt động</option>
+                </select>
+                <button class="btn-add-customer" type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
         </div>
-        <select class="filter-dropdown">
-            <option value="">Vai trò</option>
-            <option value="admin">Quản trị viên</option>
-            <option value="staff">Nhân viên</option>
-            <option value="user">Người dùng</option>
-        </select>
-        <select class="filter-dropdown">
-            <option value="">Trạng thái</option>
-            <option value="active">Đang hoạt động</option>
-            <option value="inactive">Không hoạt động</option>
-        </select>
-    </div>
+    </form>
 
     <table class="users-table">
         <thead>
@@ -61,7 +65,7 @@
                     <td><%= account.last_login %></td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn-action btn-edit" onclick="editCustomer('CUS001')">
+                            <button class="btn-action btn-edit" onclick="window.location.href='/accounts/<%= account.id %>'">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button class="btn-action btn-delete" onclick="deleteCustomer('CUS001')">

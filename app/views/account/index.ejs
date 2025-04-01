@@ -20,8 +20,9 @@
                     value="<%= oldData.textSearch ?? '' %>"
                 >
                 <select class="filter-dropdown" name="status">
-                    <option value="active">Đang hoạt động</option>
-                    <option value="inactive">Không hoạt động</option>
+                    <option value=""></option>
+                    <option value="active" <%= oldData.status == 'active' ? 'selected' : '' %>>Đang hoạt động</option>
+                    <option value="inactive" <%= oldData.status == 'inactive' ? 'selected' : '' %>>Không hoạt động</option>
                 </select>
                 <button class="btn-add-customer" type="submit">
                     <i class="fas fa-search"></i> Search
@@ -36,9 +37,10 @@
                 <th>STT</th>
                 <th>Tên đăng nhập</th>
                 <th>Người dùng</th>
+                <th>Spam zalo</th>
+                <th>Spam icloud</th>
                 <th>Vai trò</th>
                 <th>Trạng thái</th>
-                <th>Thời gian login</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -57,12 +59,17 @@
                         </div>
                     </td>
                     <td>
-                        <span class="role-badge"><%= account.role == 'user' ? 'Quản trị viên' : 'Người dùng' %></span>
+                        <span class="status-badge <%= account.spam_zalo == 'on' ? ' status-active' : ' status-inactive' %>"><%= account.spam_zalo == 'on' ? 'Bật' : 'Tắt' %></span>
+                    </td>
+                    <td>
+                        <span class="status-badge <%= account.spam_icloud == 'on' ? ' status-active' : ' status-inactive' %>"><%= account.spam_icloud == 'on' ? 'Bật' : 'Tắt' %></span>
+                    </td>
+                    <td>
+                        <span class="role-badge"><%= account.role == 'user' ? 'Người dùng' : 'Quản trị viên' %></span>
                     </td>
                     <td>
                         <span class="status-badge status-active"><%= account.status == 'active' ? 'Đang hoạt động' : 'Không hoạt động' %></span>
                     </td>
-                    <td><%= account.last_login %></td>
                     <td>
                         <div class="action-buttons">
                             <button class="btn-action btn-edit" onclick="window.location.href='/accounts/<%= account.id %>'">
@@ -78,29 +85,21 @@
         </tbody>
     </table>
 
-    <!-- <div class="pagination">
-        <button>&laquo;</button>
-        <button class="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>&raquo;</button>
-    </div> -->
-
     <!-- Phân trang -->
-    <div class="pagination">
-        <% if (currentPageNumber > 1) { %>
-            <a href="/accounts?page=<%= currentPageNumber - 1 %>">« Trước</a>
-        <% } %>
-
-        <% for (let i = 1; i <= totalPages; i++) { %>
-            <a href="/accounts?page=<%= i %>"
-                class="<%= i === currentPageNumber ? 'active' : '' %>">
-                <%= i %>
-            </a>
-        <% } %>
-
-        <% if (currentPageNumber < totalPages) { %>
-            <a href="/accounts?page=<%= currentPageNumber + 1 %>">Sau »</a>
-        <% } %>
-    </div>
+    <% if ( totalPages >= limit) { %>
+        <div class="pagination">
+            <% if (currentPageNumber > 1) { %>
+                <a href="/accounts?page=<%= currentPageNumber - 1 %>">«</a>
+            <% } %>
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/customers?page=<%= i %>"
+                    class="<%= i === currentPageNumber ? 'active' : '' %>">
+                    <%= i %>
+                </a>
+            <% } %>
+            <% if (currentPageNumber < totalPages) { %>
+                <a href="/accounts?page=<%= currentPageNumber + 1 %>">»</a>
+            <% } %>
+        </div>
+    <% } %>
 </div>

@@ -12,6 +12,8 @@ const Loan = db.loan;
 const customerController = {
   getCustomers: async (req, res) => {
     try {
+      // Get info account
+      const accountInfo = req.session.user;
       const page = parseInt(req.query.page) || 1;
       const limit = config.page_size;
       const offset = (page - 1) * limit;
@@ -25,9 +27,13 @@ const customerController = {
             { national_id: { [Op.like]: `%${textSearch}%` } },
             { phone: { [Op.like]: `%${textSearch}%` } },
             { email: { [Op.like]: `%${textSearch}%` } }
-          ]
+          ],
         }
       : {};
+
+      if (accountInfo.role !== 'admin') {
+        whereCondition.account_id = accountInfo.id;
+      }
 
       const { count, rows: customers } = await Customer.findAndCountAll({
         where: whereCondition,
@@ -74,7 +80,11 @@ const customerController = {
         });
       }
 
+      // Get info account
+      const accountInfo = req.session.user;
+
       const customer = await Customer.create({
+        account_id: accountInfo.id,
         full_name: req.body.full_name,
         national_id: req.body.national_id,
         phone: req.body.phone,
@@ -109,27 +119,7 @@ const customerController = {
         status: 'Đang trả',
       });
 
-      const page = parseInt(req.query.page) || 1;
-      const limit = config.page_size;
-      const offset = (page - 1) * limit;
-
-      const { count, rows: customers } = await Customer.findAndCountAll({
-        limit,
-        offset
-      });
-
-      const totalPages = Math.ceil(count / limit);
-
-      return res.render('customers/index', {
-        customers,
-        currentPageNumber: page,
-        totalPages,
-        oldData: {
-          textSearch: ''
-        },
-        limit: limit
-      });
-
+      return res.redirect('/customers');
     } catch (error) {
       let mesErr = '';
       console.log("error: ", error);
@@ -151,6 +141,8 @@ const customerController = {
   detailCustomer: async (req, res) => {
     try {
       const id = user_id = req.params.id;
+      // Get info account
+      const accountInfo = req.session.user;
       const customer = await Customer.findOne({where: {id}});
       const loans = await Loan.findAll({
         where: { user_id },
@@ -166,7 +158,8 @@ const customerController = {
       res.render('customers/show', {
         customer,
         loanStats,
-        loans
+        loans,
+        accountInfo
       });
     } catch (error) {
       console.error('customers Error:', error);

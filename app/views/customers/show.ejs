@@ -7,19 +7,19 @@
       <span class="id">#<%= customer.id %></span>
     </div>
   </div>
-  <div class="header-actions" style="display: contents;">
-    <button class="btn-add-customer" onclick="window.location.href='/customers/create/<%= customer.id %>'">
+  <div class="header-actions" style="display: flex;">
+    <button class="btn-add-customer" style="margin-right: 10px;" onclick="window.location.href='/customers/create/<%= customer.id %>'">
       <i class="fas fa-plus"></i>Tạo khoản vay mới
     </button>
-    <button class="btn btn-sms">
+    <button class="btn btn-sms <%= accountInfo.spam_zalo === 'off' ? 'disable' : '' %>" style="margin-right: 10px;">
       <i class="fas fa-sms"></i>Spam Zalo SMS
     </button>
-    <button class="btn btn-cloud">
+    <button class="btn btn-cloud <%= accountInfo.spam_icloud === 'off' ? 'disable' : '' %>">
       <i class="fas fa-cloud"></i>Spam Cloud Iphone
     </button>
-    <button class="btn btn-back" onclick="window.history.back()">
+    <!-- <button class="btn btn-back" onclick="window.history.back()">
       <i class="fas fa-arrow-left"></i>Trở lại
-    </button>
+    </button> -->
   </div>
 </div>
 

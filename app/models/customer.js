@@ -7,6 +7,10 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    account_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
     full_name: {
       type: DataTypes.STRING(100),
       allowNull: false,

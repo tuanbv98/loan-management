@@ -37,7 +37,13 @@ const authController = {
       );
 
       req.session.token = token;
-      req.session.user = { id: user.id, user_name: user.user_name, role: user.role };
+      req.session.user = {
+        id: user.id,
+        user_name: user.user_name,
+        role: user.role,
+        spam_zalo: user.spam_zalo,
+        spam_icloud: user.spam_icloud
+      };
       res.redirect("/");
     } catch (error) {
       console.log('error: ', error);

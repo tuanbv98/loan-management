@@ -12,7 +12,7 @@ const accountController = {
       const offset = (page - 1) * limit;
 
       const textSearch = req.body.textSearch || '';
-      const status = req.body.status || 'active';
+      const status = req.body.status;
 
       const whereCondition = {
         [Op.or]: [
@@ -21,8 +21,11 @@ const accountController = {
           { email: { [Op.like]: `%${textSearch}%` } },
           { status: { [Op.like]: `%${textSearch}%` } }
         ],
-        status: status
       };
+
+      if (status) {
+        whereCondition.status = status;
+      }
 
       const { count, rows: accounts } = await User.findAndCountAll({
         where: whereCondition,
@@ -36,6 +39,7 @@ const accountController = {
         accounts,
         currentPageNumber: page,
         totalPages,
+        limit,
         oldData: {
           textSearch: textSearch,
           status: status
@@ -81,29 +85,15 @@ const accountController = {
         full_name: req.body.full_name,
         email: req.body.email,
         password_hash: bcrypt.hashSync(req.body.password_hash, 8),
+        spam_zalo: req.body.spam_zalo,
+        spam_icloud: req.body.spam_icloud,
         avatar_url: null,
         role: req.body.role,
-        status: req.body.status === '0' ? 'active' : 'inactive',
+        status: req.body.status,
         last_login: null,
       });
 
-      // Lấy danh sách tài khoản sau khi tạo mới
-      const page = parseInt(req.query.page) || 1;
-      const limit = 20;
-      const offset = (page - 1) * limit;
-      const { count, rows: accounts } = await User.findAndCountAll({
-        limit,
-        offset
-      });
-
-      const totalPages = Math.ceil(count / limit);
-
-      res.render('account/index', {
-        accounts,
-        currentPageNumber: page,
-        totalPages,
-        oldData: {}
-      });
+      return res.redirect('/accounts');
 
     } catch (error) {
       console.log("error: ", error);
@@ -115,7 +105,7 @@ const accountController = {
     }
   },
 
-  // Thông tin chi tiết khách hàng
+  // Thông tin chi tiết người dùng
   accountDetail: async (req, res) => {
     try {
       const id = user_id = req.params.id;
@@ -134,9 +124,32 @@ const accountController = {
     }
   },
 
-  // Cập nhật thông tin khách hàng
+  // Cập nhật thông tin người dùng
   accountEdit: async (req, res) => {
-    // TODO
+    try {
+      const id = req.params.id;
+      await User.update(
+        {
+          user_name: req.body.user_name,
+          full_name: req.body.full_name,
+          email: req.body.email,
+          // password_hash: bcrypt.hashSync(req.body.password_hash, 8),
+          spam_zalo: req.body.spam_zalo,
+          spam_icloud: req.body.spam_icloud,
+          // avatar_url: null,
+          role: req.body.role,
+          // status: req.body.status,
+          // last_login: null,
+        },
+        { where: { id } }
+      );
+
+      return res.redirect('/accounts');
+
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).send("Internal Server Error");
+    }
   },
 };
 

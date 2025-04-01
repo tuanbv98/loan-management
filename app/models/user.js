@@ -23,6 +23,16 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    // Spam zalo
+    spam_zalo: {
+      type: DataTypes.ENUM("off", "on"),
+      defaultValue: "off",
+    },
+    // Spam icloud
+    spam_icloud: {
+      type: DataTypes.ENUM("off", "on"),
+      defaultValue: "off",
+    },
     avatar_url: {
       type: DataTypes.STRING(255),
     },

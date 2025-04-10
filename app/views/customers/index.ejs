@@ -42,30 +42,28 @@
                 </tr>
             </thead>
             <tbody>
-
-                    <% customers.forEach((customer, index) => { %>
-                        <tr key="<%= index %>">
-                            <td><%= index + 1 %></td>
-                            <td><%= customer.full_name %></td>
-                            <td><%= customer.national_id %></td>
-                            <td><%= customer.phone %></td>
-                            <td><%= customer.email %></td>
-                            <td>50000</td>
-                            <td><%= customer.address %></td>
-                            <td><%= customer.gender %></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-action btn-edit" onclick="window.location.href='/customers/<%= customer.id %>'">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn-action btn-delete" onclick="deleteCustomer('CUS001')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    <% }); %>
-
+                <% customers.forEach((customer, index) => { %>
+                    <tr key="<%= index %>">
+                        <td><%= index + 1 %></td>
+                        <td><%= customer.full_name %></td>
+                        <td><%= customer.national_id %></td>
+                        <td><%= customer.phone %></td>
+                        <td><%= customer.email %></td>
+                        <td>50000</td>
+                        <td><%= customer.address %></td>
+                        <td><%= customer.gender %></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action btn-edit" onclick="window.location.href='/customers/<%= customer.id %>'">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-action btn-delete" onclick="deleteCustomer('CUS001')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
                 <!-- Add more customer rows here -->
             </tbody>
         </table>

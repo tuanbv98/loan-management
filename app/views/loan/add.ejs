@@ -3,27 +3,24 @@
 </div>
 
 <div class="content-wrapper">
-    <!-- Customer Info Card -->
-    <!-- <div class="customer-card">
-        <div class="customer-avatar">
-            <i class="fas fa-user-circle"></i>
-        </div>
-        <div class="customer-details">
-            <h3><%= customer.full_name %></h3>
-            <div class="customer-meta">
-                <span><i class="fas fa-id-card"></i> CCCD: <%= customer.national_id %></span>
-                <span><i class="fas fa-phone"></i><%= customer.phone %></span>
-            </div>
-        </div>
-    </div> -->
-
     <!-- Loan Form -->
     <div class="loan-form-container">
-        <form class="loan-form" action="/loan/create" method="POST">
+        <form class="loan-form" action="/loan/add" method="POST">
             <div class="form-grid">
                 <!-- Left Column -->
                 <div class="form-section">
                     <h3>Thông tin khoản vay</h3>
+                    <div class="form-group">
+                        <label>Khách hàng</label>
+                        <div class="input-group">
+                            <select class="filter-dropdown" name="user_id">
+                                <option value=""></option>
+                                <% customers.forEach((customer, index) => { %>
+                                    <option value="<%= customer.id %>"><%= customer.full_name %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label>Số tiền vay</label>
                         <div class="input-group">

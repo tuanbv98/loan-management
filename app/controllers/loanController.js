@@ -1,18 +1,62 @@
 const db = require("../models");
 const crypto = require('crypto');
 const moment = require("moment");
+const config = require("../config/config.json");
+const { Sequelize, Op, where } = require("sequelize");
 const Customer = db.customer;
 const Loan = db.loan;
 
 const loanController = {
     getLoans: async (req, res) => {
         try {
+            const accountInfo = req.session.user;
+            const page = parseInt(req.query.page) || 1;
+            const limit = config.page_size;
+            const offset = (page - 1) * limit;
+            const textSearch = req.body.textSearch || '';
+            console.log("textSearch: ", textSearch);
+
+            const whereCondition = textSearch
+                ? {
+                    [Op.or]: [
+                    { full_name: { [Op.like]: `%${textSearch}%` } },
+                    { national_id: { [Op.like]: `%${textSearch}%` } },
+                    { phone: { [Op.like]: `%${textSearch}%` } },
+                    { email: { [Op.like]: `%${textSearch}%` } }
+                    ],
+                }
+                : {};
+
+            if (accountInfo.role !== 'admin') {
+                whereCondition.account_id = accountInfo.id;
+            }
+
+            const { count, rows: loans } = await Loan.findAndCountAll({
+                where: whereCondition,
+                limit,
+                offset
+            });
+
+            const loanInfo = {
+                numberLoans: loans.length,
+                overdueLoans: loans.filter(loan => loan.status === "Quá hạn").length,
+                totalAmount: loans.reduce((sum, loan) => sum + loan.amount, 0),
+            };
+
+            const totalPages = Math.ceil(count / limit);
+
             res.render('loan/index', {
-                title: 'Loan',
-                currentPage: 'loan',
+            loans,
+            loanInfo,
+            currentPageNumber: page,
+            totalPages,
+            oldData: {
+                textSearch: textSearch
+            },
+            limit: limit
             });
         } catch (error) {
-            console.error('customers Error:', error);
+            console.error('loans Error:', error);
             res.status(500).render('error', {
                 message: 'Error loading loan',
                 error: process.env.NODE_ENV === 'development' ? error : {}
@@ -104,12 +148,22 @@ const loanController = {
     // Tạo mới khoản vay từ màn hình quản lý khoản vay
     formAdd: async (req, res) => {
         try {
+            const accountInfo = req.session.user
+            const whereCondition = {};
+            if (accountInfo.role !== 'admin') {
+                whereCondition.account_id = accountInfo.id;
+            }
+            const customers = await Customer.findAll({
+                where: whereCondition,
+            });
+
             res.render('loan/add', {
-                customer,
+                customers,
                 error: null,
                 oldData: {}
             });
         } catch (error) {
+            console.log("error: ", error);
             res.status(500).render('error', {
                 message: 'Lỗi server',
                 error: process.env.NODE_ENV === 'development' ? error : {}
@@ -128,7 +182,7 @@ const loanController = {
             const dayPayment = Math.round(amountReceived / 40);
 
             await Loan.create({
-                user_id: customer.id,
+                user_id: req.body.user_id,
                 loan_code: crypto.randomBytes(20).toString('hex').slice(0, 20),
                 amount: req.body.amount,
                 interest_rate: req.body.interest_rate,
@@ -148,7 +202,7 @@ const loanController = {
                 oldData: {}
             });
         } catch (error) {
-            res.render('loans/add', {
+            res.render('loan/add', {
                 customer: null,
                 error: null,
                 oldData: {}

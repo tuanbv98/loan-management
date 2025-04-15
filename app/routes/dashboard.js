@@ -74,18 +74,6 @@ router.get(
     loanController.getLoans
 );
 router.get(
-    '/customers/create/:id',
-    auth.verifyToken,
-    auth.checkRole(['admin', 'user']),
-    loanController.formCreate
-);
-router.post(
-    '/customers/create/:id',
-    auth.verifyToken,
-    auth.checkRole(['admin', 'user']),
-    loanController.createLoanFollowCustomer
-);
-router.get(
     '/loans/create',
     auth.verifyToken,
     auth.checkRole(['admin', 'user']),
@@ -96,6 +84,20 @@ router.post(
     auth.verifyToken,
     auth.checkRole(['admin', 'user']),
     loanController.addLoan
+);
+
+// Customers
+router.get(
+    '/customers/create/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    loanController.formCreate
+);
+router.post(
+    '/customers/create/:id',
+    auth.verifyToken,
+    auth.checkRole(['admin', 'user']),
+    loanController.createLoanFollowCustomer
 );
 
 // Settings

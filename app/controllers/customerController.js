@@ -4,7 +4,6 @@ const config = require("../config/config.json");
 const crypto = require('crypto');
 const { Sequelize, Op, where } = require("sequelize");
 const moment = require("moment");
-const { count, log } = require('console');
 
 const Customer = db.customer;
 const Loan = db.loan;
@@ -31,8 +30,11 @@ const customerController = {
         }
       : {};
 
+      const conditionLoan = {};
+
       if (accountInfo.role !== 'admin') {
         whereCondition.account_id = accountInfo.id;
+        conditionLoan.account_id = accountInfo.id;
       }
 
       const { count, rows: customers } = await Customer.findAndCountAll({
@@ -41,10 +43,15 @@ const customerController = {
         offset
       });
 
+      const loans = await Loan.findAll({
+        where: conditionLoan,
+      });
+
       const totalPages = Math.ceil(count / limit);
 
       res.render('customers/index', {
         customers,
+        loans,
         currentPageNumber: page,
         totalPages,
         oldData: {

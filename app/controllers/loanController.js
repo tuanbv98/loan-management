@@ -16,6 +16,7 @@ const loanController = {
             const textSearch = req.body.textSearch || '';
             console.log("textSearch: ", textSearch);
 
+            const customerCondition = {};
             const whereCondition = textSearch
                 ? {
                     [Op.or]: [
@@ -29,6 +30,7 @@ const loanController = {
 
             if (accountInfo.role !== 'admin') {
                 whereCondition.account_id = accountInfo.id;
+                customerCondition.account_id = accountInfo.id;
             }
 
             const { count, rows: loans } = await Loan.findAndCountAll({
@@ -43,11 +45,16 @@ const loanController = {
                 totalAmount: loans.reduce((sum, loan) => sum + loan.amount, 0),
             };
 
+            const customers = await Customer.findAll({
+                where: customerCondition,
+            });
+
             const totalPages = Math.ceil(count / limit);
 
             res.render('loan/index', {
             loans,
             loanInfo,
+            customers,
             currentPageNumber: page,
             totalPages,
             oldData: {
@@ -80,6 +87,7 @@ const loanController = {
                 oldData: {}
             });
         } catch (error) {
+            console.log('error: ', error);
             res.status(500).render('error', {
                 message: 'Lỗi server',
                 error: process.env.NODE_ENV === 'development' ? error : {}
@@ -137,6 +145,7 @@ const loanController = {
                 loans
             });
         } catch (error) {
+            console.log("error: ", error);
             res.render('loans/create', {
                 customer: await Customer.findByPk(req.body.user_id),
                 error: error.message,
@@ -196,15 +205,11 @@ const loanController = {
                 status: 'Đang trả',
             });
 
-            res.render('loan/add', {
-                customer: null,
-                error: null,
-                oldData: {}
-            });
+            return res.redirect('/loans');
         } catch (error) {
             res.render('loan/add', {
                 customer: null,
-                error: null,
+                error: error,
                 oldData: {}
             });
         }

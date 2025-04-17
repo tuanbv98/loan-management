@@ -50,8 +50,25 @@ const calculateLoan = () => {
     document.getElementById('due_date').textContent = formatDate(dueDate);
 }
 
-document.getElementById('start_date').valueAsDate = new Date();
+const previewImage = (input, previewId) => {
+    const preview = document.getElementById(previewId);
+    const file = input.files[0];
 
-document.getElementById('loanForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-});
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.style.backgroundImage = `url(${e.target.result})`;
+            preview.style.display = 'block';
+            input.parentElement.querySelector('.upload-content').style.display = 'none';
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+
+// document.getElementById('start_date').valueAsDate = new Date();
+
+// document.getElementById('loanForm').addEventListener('submit', function(e) {
+//     e.preventDefault();
+// });

@@ -7,6 +7,7 @@ const moment = require("moment");
 
 const Customer = db.customer;
 const Loan = db.loan;
+const CustomerInfo = db.customerInfo;
 
 const customerController = {
   getCustomers: async (req, res) => {
@@ -78,12 +79,14 @@ const customerController = {
 
   createCustomer: async (req, res) => {
     const errors = validationResult(req);
+    const dbTransaction = await db.sequelize.transaction();
 
     try {
       if (!errors.isEmpty()) {
         return res.render('customers/create', {
           errors: errors.array(),
-          oldData: req.body
+          oldData: req.body,
+          error: null
         });
       }
 
@@ -126,8 +129,26 @@ const customerController = {
         status: 'Đang trả',
       });
 
+      await CustomerInfo.create({
+        user_id: customer.id,
+        icloud: req.body.icloud,
+        id_card_front: req.files['id_card_front'][0].path,
+        id_card_back: req.files['id_card_back'][0].path,
+        id_card_issue_date: req.body.id_card_issue_date,
+        id_card_issue_place: req.body.id_card_issue_place,
+        contact_phone_1: req.body.contact_phone_1,
+        contact_phone_2: req.body.contact_phone_2,
+        contact_phone_3: req.body.contact_phone_3,
+        bank_name: req.body.bank_name,
+        bank_account_number: req.body.bank_account_number,
+        bank_account_name: req.body.bank_account_name,
+        workplace_name: req.body.workplace_name,
+        workplace_address: req.body.workplace_address
+      });
+      await dbTransaction.commit()
       return res.redirect('/customers');
     } catch (error) {
+      await dbTransaction.rollback();
       let mesErr = '';
       console.log("error: ", error);
 

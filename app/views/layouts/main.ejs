@@ -60,8 +60,8 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div>
-                        <h3>Welcome back,</h3>
-                        <h2 id="username">Admin User</h2>
+                        <!-- <h3>Chào mừng quay trở lại,</h3> -->
+                        <h2 id="username"><%= session.user.user_name %></h2>
                     </div>
                 </div>
                 <button class="logout-btn" onclick="window.location.href='/logout'">

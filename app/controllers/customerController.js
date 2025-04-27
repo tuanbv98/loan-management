@@ -177,6 +177,9 @@ const customerController = {
       const loans = await Loan.findAll({
         where: { user_id },
       });
+      const customerInfo = await CustomerInfo.findOne({where: { user_id }});
+
+      console.log("customerInfo: ", customerInfo);
 
       const loanStats = {
         numberLoans: loans.length,
@@ -189,7 +192,8 @@ const customerController = {
         customer,
         loanStats,
         loans,
-        accountInfo
+        accountInfo,
+        customerInfo
       });
     } catch (error) {
       console.error('customers Error:', error);

@@ -50,39 +50,9 @@
     </div>
   </div>
 
-  <!-- Gallery ảnh CCCD/CMND -->
-  <div class="detail-card full-width">
-    <h2><i class="fas fa-images"></i> Ảnh CCCD/CMND đã upload</h2>
-    <div class="card-content">
-      <div class="uploaded-images-gallery">
-        <%
-          let images = [];
-          if (customer.images_url) {
-            if (typeof customer.images_url === 'string') {
-              try { images = JSON.parse(customer.images_url); } catch(e) { images = []; }
-            } else {
-              images = customer.images_url;
-            }
-          }
-        %>
-        <% if (images && images.length > 0) { %>
-          <% images.forEach(function(img) { %>
-            <div class="gallery-item">
-              <a href="<%= img %>" target="_blank">
-                <img src="<%= img %>" alt="Ảnh CCCD/CMND" />
-              </a>
-            </div>
-          <% }) %>
-        <% } else { %>
-          <div>Chưa có ảnh nào được upload.</div>
-        <% } %>
-      </div>
-    </div>
-  </div>
-
   <!-- Loan Summary -->
   <div class="detail-card">
-    <h2><i class="fas fa-money-bill-wave"></i>Thông tin cơ bản</h2>
+    <h2><i class="fas fa-money-bill-wave"></i>Thông tin khoản vay</h2>
     <div class="card-content">
       <div class="summary-stats">
         <div class="stat-item">
@@ -106,6 +76,89 @@
         </div>
         <div></div>
         <div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery ảnh CCCD/CMND -->
+  <div class="detail-card full-width">
+    <h2><i class="fas fa-images"></i>Thông tin cơ bản</h2>
+    <div class="grid-50-50">
+      <div class="card-content" style="margin-right: 15px;">
+        <div class="customer_info">
+          <label>Tài khoản icloud</label>
+          <span class="customer_info_label"><%= customerInfo.icloud %></span>
+        </div>
+        <div class="customer_info">
+          <label>Ngày cấp CCCD</label>
+          <span class="customer_info_label"><%= customerInfo.id_card_issue_date %></span>
+        </div>
+        <div class="customer_info">
+          <label>Nơi cấp CCCD</label>
+          <span class="customer_info_label"><%= customerInfo.id_card_issue_place %></span>
+        </div>
+        <div class="customer_info">
+          <label>SDT người thân 1</label>
+          <span class="customer_info_label"><%= customerInfo.contact_phone_1 %></span>
+        </div>
+        <div class="customer_info">
+          <label>SDT người thân 2</label>
+          <span class="customer_info_label"><%= customerInfo.contact_phone_2 %></span>
+        </div>
+        <div class="customer_info">
+          <label>SDT người thân 3</label>
+          <span class="customer_info_label"><%= customerInfo.contact_phone_3 %></span>
+        </div>
+      </div>
+      <div class="card-content" style="margin-left: 15px; margin-right: 10px;">
+        <div class="customer_info">
+          <label>Tên ngân hàng</label>
+          <span class="customer_info_label"><%= customerInfo.bank_name %></span>
+        </div>
+        <div class="customer_info">
+          <label>Số tài khoản</label>
+          <span class="customer_info_label"><%= customerInfo.bank_account_number %></span>
+        </div>
+        <div class="customer_info">
+          <label>Tên tài khoản</label>
+          <span class="customer_info_label"><%= customerInfo.bank_account_name %></span>
+        </div>
+        <div class="customer_info">
+          <label>Tên nơi làm hiện tại</label>
+          <span class="customer_info_label"><%= customerInfo.workplace_name %></span>
+        </div>
+        <div class="customer_info">
+          <label>Địa chỉ nơi làm việc hiện tại</label>
+          <span class="customer_info_label"><%= customerInfo.workplace_address %></span>
+        </div>
+      </div>
+    </div>
+    <div class="card-content">
+      <h2>Ảnh</h2>
+      <div class="uploaded-images-gallery">
+        <%
+          let images = [];
+          if (customerInfo.images_url) {
+            if (typeof customerInfo.images_url === 'string') {
+              images = customerInfo.images_url.split(';').filter(img => img.trim() !== '');
+            } else {
+              images = customerInfo.images_url;
+            }
+          }
+        %>
+        <% if (images && images.length > 0) { %>
+          <div class="gallery-grid">
+            <% images.slice(0, 10).forEach(function(img) { %> <!-- chỉ lấy tối đa 10 ảnh -->
+              <div class="gallery-item">
+                <a href="/<%= img.replace('app\\public\\', '') %>" target="_blank">
+                  <img src="/<%= img.replace('app\\public\\', '') %>" alt="Ảnh CCCD/CMND" />
+                </a>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div>Chưa có ảnh nào được upload.</div>
+        <% } %>
       </div>
     </div>
   </div>
@@ -147,33 +200,3 @@
     </div>
   </div>
 </div>
-
-<style>
-.uploaded-images-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 10px;
-}
-.gallery-item {
-  width: 120px;
-  height: 90px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #f8fafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .2s;
-}
-.gallery-item:hover img {
-  transform: scale(1.08);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-</style>

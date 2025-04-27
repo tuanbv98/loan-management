@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: true
     },
     images_url: {
-      type: Sequelize.STRING(5000), // đường dẫn ảnh mặt trước
+      type: Sequelize.STRING(5000), // đường dẫn ảnh
       allowNull: true
     },
     id_card_back: {

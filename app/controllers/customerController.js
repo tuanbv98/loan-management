@@ -129,11 +129,13 @@ const customerController = {
         status: 'Đang trả',
       });
 
+      const imagePaths = req.files.map(file => file.path.replace('./app/public/uploads', '/')).join(';');
       await CustomerInfo.create({
         user_id: customer.id,
         icloud: req.body.icloud,
-        id_card_front: req.files['id_card_front'][0].path,
-        id_card_back: req.files['id_card_back'][0].path,
+        id_card_front: null,
+        id_card_back: null,
+        images_url: imagePaths,
         id_card_issue_date: req.body.id_card_issue_date,
         id_card_issue_place: req.body.id_card_issue_place,
         contact_phone_1: req.body.contact_phone_1,

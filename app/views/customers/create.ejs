@@ -1,78 +1,98 @@
 <div class="header">
-    <h1>Thêm mới khách hàng</h1>
+  <h1>Thêm mới khách hàng</h1>
 </div>
 
-<% if (errors.length > 0) { %>
-    <% errors.forEach(error => { %>
-        <div class="error-message" id="error-message">
-            <%= error.msg %>
-        </div>
-    <% }) %>
-<% } %>
-
-<% if (error) { %>
+<% if (errors.length> 0) { %>
+  <% errors.forEach(error=> { %>
     <div class="error-message" id="error-message">
-        <%= error %>
+      <%= error.msg %>
     </div>
-<% } %>
+    <% }) %>
+      <% } %>
 
-<form id="createCustomForm" action="/customers/create" method="POST" enctype="multipart/form-data" class="customer-form">
-    <!-- Thông tin cơ bản -->
-    <div class="form-section">
-        <h2 style="margin-bottom: 20px;">Thông tin cơ bản</h2>
-        <div class="grid-50-50">
-            <div class="form-group">
-                <label for="full_name">Họ và tên<span class="required">*</span></label>
-                <input type="text" id="full_name" name="full_name" class="form-control" required value="<%= oldData.full_name %>">
-            </div>
+        <% if (error) { %>
+          <div class="error-message" id="error-message">
+            <%= error %>
+          </div>
+          <% } %>
 
-            <div class="form-group">
-                <label for="national_id">Số CCCD/CMND<span class="required">*</span></label>
-                <input type="text" id="national_id" name="national_id" class="form-control" required value="<%= oldData.national_id %>">
-            </div>
+            <form id="createCustomForm" action="/customers/create" method="POST" enctype="multipart/form-data"
+              class="customer-form">
+              <!-- Thông tin cơ bản -->
+              <div class="form-section">
+                <h2 style="margin-bottom: 20px;">Thông tin cơ bản</h2>
+                <div class="grid-50-50">
+                  <div class="form-group">
+                    <label for="full_name">Họ và tên<span class="required">*</span></label>
+                    <input type="text" id="full_name" name="full_name" class="form-control" required
+                      value="<%= oldData.full_name %>">
+                  </div>
 
-            <div class="form-group">
-                <label for="phone">Số điện thoại<span class="required">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control" maxlength="11" required value="<%= oldData.phone %>">
-            </div>
+                  <div class="form-group">
+                    <label for="national_id">Số CCCD/CMND<span class="required">*</span></label>
+                    <input type="text" id="national_id" name="national_id" class="form-control" required
+                      value="<%= oldData.national_id %>">
+                  </div>
 
-            <div class="form-group">
-                <label for="icloud">Tài khoản icloud<span class="required">*</span></label>
-                <input type="text" id="icloud" name="icloud" class="form-control" required value="<%= oldData.icloud %>">
-            </div>
+                  <div class="form-group">
+                    <label for="phone">Số điện thoại<span class="required">*</span></label>
+                    <input type="text" id="phone" name="phone" class="form-control" maxlength="11" required
+                      value="<%= oldData.phone %>">
+                  </div>
 
-            <div class="form-group">
-                <label>Giới tính</label>
-                <select class="filter-dropdown" name="gender">
-                    <option value="0" selected="<%= oldData.gender == '0' ? 'selected' : '' %>">Nam</option>
-                    <option value="1" selected="<%= oldData.gender == '1' ? 'selected' : '' %>">Nữ</option>
-                </select>
-            </div>
+                  <div class="form-group">
+                    <label for="icloud">Tài khoản icloud<span class="required">*</span></label>
+                    <input type="text" id="icloud" name="icloud" class="form-control" required
+                      value="<%= oldData.icloud %>">
+                  </div>
 
-            <div class="form-group">
-                <label for="email">Email<span class="required">*</span></label>
-                <input type="email" id="email" name="email" class="form-control" value="<%= oldData.email %>">
-            </div>
+                  <div class="form-group">
+                    <label>Giới tính</label>
+                    <select class="filter-dropdown" name="gender">
+                      <option value="0" selected="<%= oldData.gender == '0' ? 'selected' : '' %>">Nam</option>
+                      <option value="1" selected="<%= oldData.gender == '1' ? 'selected' : '' %>">Nữ</option>
+                    </select>
+                  </div>
 
-            <div class="form-group">
-                <label for="address">Địa chỉ<span class="required">*</span></label>
-                <input type="text" id="address" name="address" class="form-control" required value="<%= oldData.address %>">
-            </div>
+                  <div class="form-group">
+                    <label for="email">Email<span class="required">*</span></label>
+                    <input type="email" id="email" name="email" class="form-control" value="<%= oldData.email %>">
+                  </div>
 
-            <div class="form-group">
-                <label for="amount">Số tiền vay<span class="required">*</span></label>
-                <input type="number" id="amount" name="amount" class="form-control" required value="<%= oldData.amount %>">
-            </div>
+                  <div class="form-group">
+                    <label for="address">Địa chỉ<span class="required">*</span></label>
+                    <input type="text" id="address" name="address" class="form-control" required
+                      value="<%= oldData.address %>">
+                  </div>
 
-            <div class="form-group">
-                <label for="interest_rate">Lãi suất<span class="required">*</span></label>
-                <input type="interest_rate" id="interest_rate" name="interest_rate" class="form-control" required value="0.4" readonly>
-            </div>
-        </div>
-    </div>
+                  <div class="form-group">
+                    <label for="amount">Số tiền vay<span class="required">*</span></label>
+                    <input type="number" id="amount" name="amount" class="form-control" required
+                      value="<%= oldData.amount %>">
+                  </div>
 
-    <!-- Upload CCCD -->
-    <div class="form-section">
+                  <div class="form-group">
+                    <label for="interest_rate">Lãi suất<span class="required">*</span></label>
+                    <input type="interest_rate" id="interest_rate" name="interest_rate" class="form-control" required
+                      value="0.4" readonly>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Ngày cấp CCCD<span class="required">*</span></label>
+                    <input type="date" id="id_card_issue_date" name="id_card_issue_date"
+                      value="<%= oldData.id_card_issue_date %>">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nơi cấp CCCD<span class="required">*</span></label>
+                    <input type="text" id="id_card_issue_place" name="id_card_issue_place"
+                      value="<%= oldData.id_card_issue_place %>">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload CCCD -->
+              <!-- <div class="form-section">
         <h2>Ảnh CCCD/CMND</h2>
         <div class="id-card-upload">
             <div class="upload-container">
@@ -114,53 +134,80 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!-- Thông tin liên hệ khẩn cấp -->
-    <div class="form-section">
-        <h2 style="margin-bottom: 20px;">Thông tin khác</h2>
-        <div class="grid-50-50">
-            <div class="form-group">
-                <label for="bank_name">Tên ngân hàng<span class="required">*</span></label>
-                <input type="text" id="bank_name" name="bank_name" class="form-control" value="<%= oldData.bank_name %>">
-            </div>
-            <div class="form-group">
-                <label for="bank_account_number">Số tài khoản<span class="required">*</span></label>
-                <input type="text" id="bank_account_number" name="bank_account_number" class="form-control" value="<%= oldData.bank_account_number %>">
-            </div>
-            <div class="form-group">
-                <label for="bank_account_name">Tên tài khoản<span class="required">*</span></label>
-                <input type="text" id="bank_account_name" name="bank_account_name" class="form-control" value="<%= oldData.bank_account_name %>">
-            </div>
-            <div class="form-group">
-                <label for="contact_phone_1">Số điện thoại người thân 1<span class="required">*</span></label>
-                <input type="text" id="contact_phone_1" name="contact_phone_1" class="form-control" value="<%= oldData.contact_phone_1 %>">
-            </div>
-            <div class="form-group">
-                <label for="contact_phone_2">Số điện thoại người thân 2<span class="required">*</span></label>
-                <input type="text" id="contact_phone_2" name="contact_phone_2" class="form-control" value="<%= oldData.contact_phone_2 %>">
-            </div>
-            <div class="form-group">
-                <label for="contact_phone_3">Số điện thoại người thân 3<span class="required">*</span></label>
-                <input type="text" id="contact_phone_3" name="contact_phone_3" class="form-control" value="<%= oldData.contact_phone_3 %>">
-            </div>
-            <div class="form-group">
-                <label for="workplace_name">Tên nơi làm việc<span class="required">*</span></label>
-                <input type="text" id="workplace_name" name="workplace_name" class="form-control" value="<%= oldData.workplace_name %>">
-            </div>
-            <div class="form-group">
-                <label for="workplace_address">Địa chỉ<span class="required">*</span></label>
-                <input type="text" id="workplace_address" name="workplace_address" class="form-control" value="<%= oldData.workplace_address %>">
-            </div>
-        </div>
-    </div>
+              <!-- Upload ảnh -->
+              <div class="form-section">
+                <h2>Upload ảnh (Tối đa 10 ảnh)</h2>
+                <div class="id-card-upload">
+                  <div class="upload-container">
+                    <div class="upload-box" id="multiUploadBox">
+                      <div class="upload-content">
+                        <i class="fas fa-id-card"></i>
+                        <span>Chọn tối đa 10 ảnh</span>
+                        <small>Click để chọn hoặc kéo thả ảnh vào đây</small>
+                      </div>
+                      <input type="file" id="images_url" name="images_url" accept="image/*" multiple
+                        onchange="handleMultiImageUpload(this)" required>
+                      <div class="multi-image-preview" id="multiImagePreview"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-    <div class="form-actions">
-        <button type="button" class="btn btn-secondary" onclick="window.history.back()">
-            <i class="fas fa-times"></i> Hủy
-        </button>
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-save"></i> Tạo mới khách hàng
-        </button>
-    </div>
-</form>
+              <!-- Thông tin liên hệ khẩn cấp -->
+              <div class="form-section">
+                <h2 style="margin-bottom: 20px;">Thông tin khác</h2>
+                <div class="grid-50-50">
+                  <div class="form-group">
+                    <label for="bank_name">Tên ngân hàng<span class="required">*</span></label>
+                    <input type="text" id="bank_name" name="bank_name" class="form-control"
+                      value="<%= oldData.bank_name %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="bank_account_number">Số tài khoản<span class="required">*</span></label>
+                    <input type="text" id="bank_account_number" name="bank_account_number" class="form-control"
+                      value="<%= oldData.bank_account_number %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="bank_account_name">Tên tài khoản<span class="required">*</span></label>
+                    <input type="text" id="bank_account_name" name="bank_account_name" class="form-control"
+                      value="<%= oldData.bank_account_name %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact_phone_1">Số điện thoại người thân 1<span class="required">*</span></label>
+                    <input type="text" id="contact_phone_1" name="contact_phone_1" class="form-control"
+                      value="<%= oldData.contact_phone_1 %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact_phone_2">Số điện thoại người thân 2<span class="required">*</span></label>
+                    <input type="text" id="contact_phone_2" name="contact_phone_2" class="form-control"
+                      value="<%= oldData.contact_phone_2 %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact_phone_3">Số điện thoại người thân 3<span class="required">*</span></label>
+                    <input type="text" id="contact_phone_3" name="contact_phone_3" class="form-control"
+                      value="<%= oldData.contact_phone_3 %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="workplace_name">Tên nơi làm việc<span class="required">*</span></label>
+                    <input type="text" id="workplace_name" name="workplace_name" class="form-control"
+                      value="<%= oldData.workplace_name %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="workplace_address">Địa chỉ<span class="required">*</span></label>
+                    <input type="text" id="workplace_address" name="workplace_address" class="form-control"
+                      value="<%= oldData.workplace_address %>">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                  <i class="fas fa-times"></i> Hủy
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i> Tạo mới khách hàng
+                </button>
+              </div>
+            </form>

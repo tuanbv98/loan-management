@@ -9,17 +9,18 @@ const loanController = require('../controllers/loanController');
 const reportsController = require('../controllers/reportController');
 const accountController = require('../controllers/accountController');
 const authController = require('../controllers/authController');
-const path = require('path');
-const multer = require('multer');
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: './app/public/uploads/id-cards',
-        filename: function(req, file, cb) {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-            cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-        }
-    })
-});
+const upload = require('../middleware/upload');
+// const path = require('path');
+// const multer = require('multer');
+// const upload = multer({
+//     storage: multer.diskStorage({
+//         destination: './app/public/uploads/id-cards',
+//         filename: function(req, file, cb) {
+//             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//             cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+//         }
+//     })
+// });
 
 // Login
 router.get('/login', authController.showLoginForm);
@@ -68,10 +69,11 @@ router.get(
 );
 router.post(
     '/customers/create',
-    upload.fields([
-        { name: 'id_card_front', maxCount: 1 },
-        { name: 'id_card_back', maxCount: 1 }
-    ]),
+    // upload.fields([
+    //     { name: 'id_card_front', maxCount: 1 },
+    //     { name: 'id_card_back', maxCount: 1 }
+    // ]),
+    upload.array('images_url', 10),
     auth.verifyToken,
     auth.checkRole(['admin', 'user']),
     [

@@ -67,6 +67,30 @@ const previewImage = (input, previewId) => {
     }
 }
 
+const handleMultiImageUpload = (input) => {
+    const preview = document.getElementById('multiImagePreview');
+    preview.innerHTML = '';
+    const files = input.files;
+    if (files.length > 10) {
+        alert('Chỉ được chọn tối đa 10 ảnh!');
+        input.value = '';
+        return;
+    }
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '80px';
+            img.style.height = '80px';
+            img.style.objectFit = 'cover';
+            img.style.margin = '5px';
+            preview.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+    });
+}
+
 // document.getElementById('start_date').valueAsDate = new Date();
 
 // document.getElementById('loanForm').addEventListener('submit', function(e) {

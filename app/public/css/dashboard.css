@@ -816,6 +816,13 @@
     gap: 1rem;
 }
 
+.multi-image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .details-grid {

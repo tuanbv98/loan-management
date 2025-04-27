@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(255), // đường dẫn ảnh mặt trước
       allowNull: true
     },
+    images_url: {
+      type: Sequelize.STRING(5000), // đường dẫn ảnh mặt trước
+      allowNull: true
+    },
     id_card_back: {
       type: Sequelize.STRING(255), // đường dẫn ảnh mặt sau
       allowNull: true

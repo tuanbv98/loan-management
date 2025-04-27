@@ -50,6 +50,36 @@
     </div>
   </div>
 
+  <!-- Gallery ảnh CCCD/CMND -->
+  <div class="detail-card full-width">
+    <h2><i class="fas fa-images"></i> Ảnh CCCD/CMND đã upload</h2>
+    <div class="card-content">
+      <div class="uploaded-images-gallery">
+        <%
+          let images = [];
+          if (customer.images_url) {
+            if (typeof customer.images_url === 'string') {
+              try { images = JSON.parse(customer.images_url); } catch(e) { images = []; }
+            } else {
+              images = customer.images_url;
+            }
+          }
+        %>
+        <% if (images && images.length > 0) { %>
+          <% images.forEach(function(img) { %>
+            <div class="gallery-item">
+              <a href="<%= img %>" target="_blank">
+                <img src="<%= img %>" alt="Ảnh CCCD/CMND" />
+              </a>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <div>Chưa có ảnh nào được upload.</div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
   <!-- Loan Summary -->
   <div class="detail-card">
     <h2><i class="fas fa-money-bill-wave"></i>Thông tin cơ bản</h2>
@@ -117,3 +147,33 @@
     </div>
   </div>
 </div>
+
+<style>
+.uploaded-images-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+.gallery-item {
+  width: 120px;
+  height: 90px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .2s;
+}
+.gallery-item:hover img {
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+</style>
